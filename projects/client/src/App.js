@@ -13,6 +13,7 @@ import {
 } from "react-router-dom";
 import Navbar from "./component/Navbar";
 import Home from "./component/Home";
+import RegisterPage from "./pages/RegisterPage";
 
 const Layout = () => {
   return (
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
     path: "/",
     element: <Layout />,
     children: [{ path: "/", element: <Home /> }],
+  },
+  {
+    path: "/Register",
+    element: <RegisterPage />,
   },
 ]);
 
