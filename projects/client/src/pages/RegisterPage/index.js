@@ -20,7 +20,7 @@ const RegisterPage = () => {
   const navigate = useNavigate();
   const handleSubmit = (value, action) => {
     try {
-      axios.post(`${process.env.REACT_APP_API_BASE_URL}/register`, value);
+      axios.post(`http://localhost:8000/api/auth/register`, value);
     } catch (error) {
       return;
     }
@@ -33,6 +33,7 @@ const RegisterPage = () => {
         email: "",
         password: "",
         phoneNumber: "",
+        storeName: "",
         password: "",
         confirmPassword: "",
       }}
@@ -89,6 +90,21 @@ const RegisterPage = () => {
           </div>
           <div>
             <div className="mb-2 block">
+              <Label htmlFor="storeName" value="your store name" />
+            </div>
+            <TextInput
+              className="input-wrapper"
+              id="storeName"
+              name="storeName"
+              required
+              type="text"
+              onChange={props.handleChange}
+              value={props.values.storeName}
+            />
+            <ErrorMessage name="storeName" component="div" />
+          </div>
+          <div>
+            <div className="mb-2 block">
               <Label htmlFor="password" value="Your password" />
             </div>
             <TextInput
@@ -117,6 +133,7 @@ const RegisterPage = () => {
             />
             <ErrorMessage name="confirmPassword" component="div" />
           </div>
+
           <Button type="submit">
             Submit
           </Button>
