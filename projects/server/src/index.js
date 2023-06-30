@@ -1,8 +1,7 @@
-require("dotenv").config({ path: `${__dirname}/.env` });
+require("dotenv").config({ path: `${__dirname}/../.env` });
 const express = require("express");
 const cors = require("cors");
 const { join } = require("path");
-
 const db = require("./models");
 const routes = require("./routes");
 
