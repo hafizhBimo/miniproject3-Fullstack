@@ -12,16 +12,14 @@ const createSchema = Yup.object().shape({
   password: Yup.string()
     .min(6, "Password must be 6 characters at minimum")
     .required("Password is required"),
-  confirmPassword: Yup.string()
-    .oneOf([Yup.ref("password"), null], "password must match")
-    .required("confirm password is required"),
 });
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const handleSubmit = (value, action) => {
+    console.log("tes");
     try {
-      axios.post(`http://localhost:8000/api/auth/register`, value);
+      axios.post(`http://localhost:8000/api/auth/login`, value);
     } catch (error) {
       return;
     }
