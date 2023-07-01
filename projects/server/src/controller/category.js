@@ -21,20 +21,19 @@ module.exports = {
   async addCategory(req, res) {
     const { newCategory } = req.body;
     try {
-      const addCategory = await db.Category.findOrCreate({
+      const categoryCheck = await db.Category.findOne({
         where: { name: newCategory },
-        defaults: {
-          name: newCategory,
-        },
       });
-      if (addCategory) {
+      if (categoryCheck) {
         return res.status(400).send({
-          message: "this category's name already exist",
+          message: "category already exist",
         });
       }
-      return res.status(200).send({
-        message: "new category successfully added",
-        data: addCategory,
+      await db.Category.create({
+        name: newCategory,
+      });
+      res.status(200).send({
+        message: "category successfully added",
       });
     } catch (errors) {
       res.status(500).send({
