@@ -16,12 +16,15 @@ import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/Login";
 import HomePage from "./pages/HomePage";
 import ManageCategoryPage from "./pages/ManageCategoryPage";
+import NavbarComponent from "./component/Navbar";
+import FooterComponent from "./component/FooterComponent";
 
 const Layout = () => {
   return (
     <>
-      <Navbar />
+      <NavbarComponent />
       <Outlet />
+      <FooterComponent />
     </>
   );
 };
