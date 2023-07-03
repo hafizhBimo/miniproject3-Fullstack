@@ -12,9 +12,10 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import Navbar from "./component/Navbar";
-import Home from "./component/Home";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/Login";
+import HomePage from "./pages/HomePage";
+import ManageCategoryPage from "./pages/ManageCategoryPage";
 
 const Layout = () => {
   return (
@@ -28,7 +29,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
-    children: [{ path: "/", element: <Home /> }],
+    children: [{ path: "/", element: <HomePage /> }],
   },
   {
     path: "/Register",
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
   {
     path: "/Login",
     element: <LoginPage />,
+  },
+  {
+    path: "/ManageCategory",
+    element: <ManageCategoryPage />,
   },
 ]);
 
