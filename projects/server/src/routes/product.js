@@ -5,6 +5,8 @@ const authMiddleware = require("../middleware/auth");
 
 router.get("/product", authProduct.getAllProduct);
 
+router.get("/:id", authProduct.singlePageProduct);
+
 router.post("/",
     authMiddleware.verifyToken,
     multerUpload.single("file"),

@@ -170,4 +170,35 @@ module.exports = {
       });
     }
   },
+
+  async singlePageProduct(req, res) {
+
+    const productId = req.params.id
+    
+    try {
+
+      const isExist = await db.Products.findOne({
+        where: { id: productId },
+      });
+      if (!isExist) {
+        return res.status(404).send({
+          message: "product not found",
+        });
+      }
+
+      const singleProduct = await db.Products.findOne({ 
+            where: { id: productId },
+        });
+
+      res.status(201).send({
+        message: "single page displayed",
+        data: singleProduct
+      });
+    } catch (error) {
+      res.status(500).send({
+        message: "fatal error on server",
+        error: error.message,
+      });
+    }
+  },
 };
