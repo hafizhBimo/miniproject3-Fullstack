@@ -35,6 +35,73 @@ module.exports = {
       });
     }
   },
+
+  async ModifyProductListing(req, res) {
+
+    const userId = req.user.id;
+    const modifyId = req.params.id;
+
+    const { name, description, price, categoryId } = req.body;
+    const imageUrl = setFromFileNameToDBValue(req.file.filename);
+
+    try {
+
+      const isExist = await db.Products.findOne({
+        where: { id: modifyId },
+      });
+      if (!isExist) {
+        return res.status(404).send({
+          message: "product listing not found",
+        });
+      }
+
+      const productData = await db.Products.findOne({
+        where: {
+          id: modifyId,
+        },
+      });
+
+
+      if (productData.sellerId !== userId) {
+        return res.status(400).send({
+          message: "cannot modify product listing that is not yours",
+        });
+      }
+
+      if (name) {
+        productData.name = name;
+      }
+
+      if (description) {
+        productData.description = description;
+      }
+
+      if (price) {
+        productData.price = price;
+      }
+
+      if (imageUrl) {
+        productData.imageUrl = imageUrl;
+      }
+
+      if (categoryId) {
+        productData.categoryId = categoryId;
+      }
+
+      await productData.save();
+
+      res.status(201).send({
+        message: "modify product listing successful",
+        data: productData,
+      });
+    } catch (error) {
+      res.status(500).send({
+        message: "fatal error on server",
+        error: error.message,
+      });
+    }
+  },
+
   async getAllProduct(req, res) {
     const pagination = {
       page: Number(req.query.page) || 1,

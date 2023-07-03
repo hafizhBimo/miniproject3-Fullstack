@@ -8,6 +8,16 @@ router.get("/product", authProduct.getAllProduct);
 router.post("/",
     authMiddleware.verifyToken,
     multerUpload.single("file"),
-    authProduct.createProductListing);
+    authProduct.createProductListing
+);
+
+router.patch("/:id",
+    authMiddleware.verifyToken,
+    multerUpload.single("file"),
+    authProduct.ModifyProductListing
+);
+
+
+
 
 module.exports = router;
