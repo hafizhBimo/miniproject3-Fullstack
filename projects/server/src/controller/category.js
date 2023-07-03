@@ -8,7 +8,7 @@ module.exports = {
       });
       res.status(200).send({
         message: "list of categories",
-        data: categories,
+        list: categories,
       });
     } catch (errors) {
       res.status(500).send({
@@ -40,6 +40,25 @@ module.exports = {
         message: "something wrong on the server",
         error: errors.message,
       });
+    }
+  },
+  async modifyCategory(req, res) {
+    const { oldCategory, newCategory } = req.body;
+    try {
+      const categoryData = await db.Category.findOne({
+        where: { name: oldCategory },
+      });
+
+      categoryData.name = newCategory;
+      await categoryData.save();
+      res.status(200).send({
+        message:"category successfully modified"
+      })
+    } catch (error) {
+        res.status(500).send({
+            message:"something wrong on the server",
+            error:error.message
+        })
     }
   },
 };
