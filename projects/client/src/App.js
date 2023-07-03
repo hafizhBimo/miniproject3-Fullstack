@@ -15,6 +15,7 @@ import Navbar from "./component/Navbar";
 import Home from "./component/Home";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/Login";
+import CreateProductListing from "./pages/Create Product Listing";
 
 const Layout = () => {
   return (
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
   {
     path: "/Login",
     element: <LoginPage />,
+  },
+  {
+    path: "/CreateProductListing",
+    element: <CreateProductListing />,
   },
 ]);
 
