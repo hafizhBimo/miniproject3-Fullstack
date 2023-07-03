@@ -9,28 +9,29 @@ const fs = require("fs");
 const { Sequelize } = require("sequelize");
 
 module.exports = {
+
   async createProductListing(req, res) {
     const sellerId = req.user.id;
-    // const categoryId = req.body.categoryId;
-    const { name, description, price } = req.body;
+    console.log(req.user);
+    const { name, description, price, categoryId } = req.body;
     const imageUrl = setFromFileNameToDBValue(req.file.filename);
     try {
-      const newProductListing = await Blog.create({
+      const newProductListing = await db.Products.create({
         name,
         description,
         price,
         sellerId,
         imageUrl,
-        // categoryId
+        categoryId
       });
       res.status(201).send({
         message: "product listing successful",
         data: newProductListing,
       });
-    } catch (errors) {
+    } catch (error) {
       res.status(500).send({
         message: "fatal error on server",
-        errors,
+        error: error.message,
       });
     }
   },
