@@ -3,7 +3,7 @@ const multerUpload = require("../middleware/multer");
 const router = require("express").Router();
 const authMiddleware = require("../middleware/auth");
 
-router.get("/product", authProduct.getAllProduct);
+router.get("/", authProduct.getAllProduct);
 
 router.get("/:id", authProduct.singlePageProduct);
 

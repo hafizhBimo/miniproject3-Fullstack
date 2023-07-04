@@ -11,7 +11,7 @@ const ManageCategoryPage = () => {
       setCategoryData(response.data.list);
     });
   }, []);
-  console.log(categoryData, "ini categorydadta");
+  
 
   return (
     <div className="manage-category-wrapper">

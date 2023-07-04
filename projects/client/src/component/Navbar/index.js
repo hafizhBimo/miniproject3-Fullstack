@@ -22,7 +22,7 @@ const NavbarComponent = () => {
       <Navbar.Collapse>
         <Navbar.Link href="/">Home</Navbar.Link>
         <Navbar.Link href="#">Your store</Navbar.Link>
-        <Navbar.Link href="/CreateProductListing">Manage Product</Navbar.Link>
+        <Navbar.Link href="/CreateProductListing">Create Product</Navbar.Link>
         <Navbar.Link href="/ManageCategory">Manage Category</Navbar.Link>
       </Navbar.Collapse>
     </Navbar>

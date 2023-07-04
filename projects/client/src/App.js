@@ -53,7 +53,13 @@ const router = createBrowserRouter([
     path: "/ModifyProductListing/:id",
     element: <ModifyProductListing />,
   },
-  { path: "/CreateProductListing", element: <CreateProductListing /> },
+  {
+    path: "/CreateProductListing",
+    element: <Layout />,
+    children: [
+      { path: "/CreateProductListing", element: <CreateProductListing /> },
+    ],
+  },
 ]);
 
 function App() {

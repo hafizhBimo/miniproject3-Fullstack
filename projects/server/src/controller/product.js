@@ -140,9 +140,9 @@ module.exports = {
         where.name = { [db.Sequelize.Op.like]: `%${pagination.name}%` };
       }
 
-      const { count, rows } = await db.Product.findAndCountAll({
+      const { count, rows } = await db.Products.findAndCountAll({
         where,
-        include: [{ model: db.user, attributes: ["username"], as: "user" }],
+        include: [{ model: db.User, attributes: ["username"], as: "User" }],
         order: [[pagination.sortBy, pagination.sortOrder]],
         limit: pagination.perPage,
         offset: (pagination.page - 1) * pagination.perPage,

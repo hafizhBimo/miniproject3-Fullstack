@@ -19,7 +19,11 @@ const LoginPage = () => {
   const handleSubmit = (value, action) => {
     console.log("tes");
     try {
-      axios.post(`http://localhost:8000/api/auth/login`, value);
+      axios
+        .post(`http://localhost:8000/api/auth/login`, value)
+        .then((response) => {
+          localStorage.setItem("token", response.data.accessToken);
+        });
     } catch (error) {
       return;
     }

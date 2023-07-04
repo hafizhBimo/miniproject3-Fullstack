@@ -1,7 +1,9 @@
+import Product from "../../component/Product";
+
 const HomePage = () => {
   return (
     <div>
-      <p>ini home ya</p>
+      <Product/>
     </div>
   );
 };

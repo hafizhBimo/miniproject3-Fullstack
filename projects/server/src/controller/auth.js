@@ -96,6 +96,7 @@ module.exports = {
           message: "fatal error on server",
           error: error.message,
         });
+        console.log(error)
       }
     },
 }
