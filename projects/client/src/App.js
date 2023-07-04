@@ -15,6 +15,7 @@ import Navbar from "./component/Navbar";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/Login";
 import HomePage from "./pages/HomePage";
+import ProductDetail from "./pages/ProductDetail";
 import ManageCategoryPage from "./pages/ManageCategoryPage";
 import NavbarComponent from "./component/Navbar";
 import FooterComponent from "./component/FooterComponent";
@@ -34,7 +35,10 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
-    children: [{ path: "/", element: <HomePage /> }],
+    children: [
+      { path: "/", element: <HomePage /> },
+      { path: "/:id", element: <ProductDetail /> },
+    ],
   },
   {
     path: "/Register",
