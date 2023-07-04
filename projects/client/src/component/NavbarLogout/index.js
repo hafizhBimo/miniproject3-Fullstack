@@ -1,7 +1,7 @@
 import { Button, Navbar } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
 
-const NavbarComponent = () => {
+const NavbarLogout = () => {
   const navigate = useNavigate();
   return (
     <Navbar fluid rounded>
@@ -21,7 +21,6 @@ const NavbarComponent = () => {
       </div>
       <Navbar.Collapse>
         <Navbar.Link href="/">Home</Navbar.Link>
-        <Navbar.Link href="#">Your store</Navbar.Link>
         <Navbar.Link href="/CreateProductListing">Create Product</Navbar.Link>
         <Navbar.Link href="/ManageCategory">Manage Category</Navbar.Link>
       </Navbar.Collapse>
@@ -29,4 +28,4 @@ const NavbarComponent = () => {
   );
 };
 
-export default NavbarComponent;
+export default NavbarLogout;

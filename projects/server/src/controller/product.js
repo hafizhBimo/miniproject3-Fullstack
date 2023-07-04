@@ -9,7 +9,6 @@ const fs = require("fs");
 const { Sequelize } = require("sequelize");
 
 module.exports = {
-
   async createProductListing(req, res) {
     const sellerId = req.user.id;
     console.log(req.user);
@@ -22,7 +21,7 @@ module.exports = {
         price,
         sellerId,
         imageUrl,
-        categoryId
+        categoryId,
       });
       res.status(201).send({
         message: "product listing successful",
@@ -37,19 +36,12 @@ module.exports = {
   },
 
   async ModifyProductListing(req, res) {
-
     const userId = req.user.id;
     const modifyId = req.params.id;
 
-   
-   
-
     const { name, description, price, categoryId } = req.body;
 
-    
-    
     try {
-
       const isExist = await db.Products.findOne({
         where: { id: modifyId },
       });
@@ -64,7 +56,6 @@ module.exports = {
           id: modifyId,
         },
       });
-
 
       if (productData.sellerId !== userId) {
         return res.status(400).send({
@@ -142,7 +133,10 @@ module.exports = {
 
       const { count, rows } = await db.Products.findAndCountAll({
         where,
-        include: [{ model: db.User, attributes: ["username"], as: "User" }],
+        include: [
+          { model: db.User, attributes: ["username"], as: "User" },
+          { model: db.Category, attributes:["name"], as: "Category" },
+        ],
         order: [[pagination.sortBy, pagination.sortOrder]],
         limit: pagination.perPage,
         offset: (pagination.page - 1) * pagination.perPage,
@@ -176,11 +170,9 @@ module.exports = {
   },
 
   async singlePageProduct(req, res) {
+    const productId = req.params.id;
 
-    const productId = req.params.id
-    
     try {
-
       const isExist = await db.Products.findOne({
         where: { id: productId },
       });
@@ -190,13 +182,13 @@ module.exports = {
         });
       }
 
-      const singleProduct = await db.Products.findOne({ 
-            where: { id: productId },
-        });
+      const singleProduct = await db.Products.findOne({
+        where: { id: productId },
+      });
 
       res.status(201).send({
         message: "single page displayed",
-        data: singleProduct
+        data: singleProduct,
       });
     } catch (error) {
       res.status(500).send({

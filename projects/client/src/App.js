@@ -11,20 +11,21 @@ import {
   Outlet,
   RouterProvider,
 } from "react-router-dom";
-import Navbar from "./component/Navbar";
+import Navbar from "./component/NavbarLogout";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/Login";
 import HomePage from "./pages/HomePage";
 import ManageCategoryPage from "./pages/ManageCategoryPage";
-import NavbarComponent from "./component/Navbar";
+import NavbarComponent from "./component/NavbarLogout";
 import FooterComponent from "./component/FooterComponent";
 import CreateProductListing from "./pages/Create Product Listing";
 import ModifyProductListing from "./pages/Modify Product Listing";
+import NavbarLogged from "./component/NavbarLogged";
 
 const Layout = () => {
   return (
     <>
-      <NavbarComponent />
+      <NavbarLogged />
       <Outlet />
       <FooterComponent />
     </>
@@ -34,32 +35,29 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
-    children: [{ path: "/", element: <HomePage /> }],
-  },
-  {
-    path: "/Register",
-    element: <RegisterPage />,
-  },
-  {
-    path: "/Login",
-    element: <LoginPage />,
-  },
-  {
-    path: "/ManageCategory",
-    element: <Layout />,
-    children: [{ path: "/ManageCategory", element: <ManageCategoryPage /> }],
-  },
-  {
-    path: "/ModifyProductListing/:id",
-    element: <ModifyProductListing />,
-  },
-  {
-    path: "/CreateProductListing",
-    element: <Layout />,
     children: [
-      { path: "/CreateProductListing", element: <CreateProductListing /> },
+      { path: "/", element: <HomePage /> },
+      { path: "/Register", element: <RegisterPage /> },
+      {
+        path: "/Login",
+        element: <LoginPage />,
+      },
+      {
+        path: "/ManageCategory",
+        element: <ManageCategoryPage />,
+      },
+      {
+        path: "/ModifyProductListing/:id",
+        element: <ModifyProductListing />,
+      },
+      {
+        path: "/CreateProductListing",
+        element: <CreateProductListing />,
+      },
     ],
   },
+  ,
+  ,
 ]);
 
 function App() {
