@@ -18,6 +18,7 @@ import HomePage from "./pages/HomePage";
 import ManageCategoryPage from "./pages/ManageCategoryPage";
 import NavbarComponent from "./component/Navbar";
 import FooterComponent from "./component/FooterComponent";
+import CreateProductListing from "./pages/Create Product Listing";
 
 const Layout = () => {
   return (
@@ -46,6 +47,7 @@ const router = createBrowserRouter([
     path: "/ManageCategory",
     element: <ManageCategoryPage />,
   },
+  { path: "/CreateProductListing", element: <CreateProductListing /> },
 ]);
 
 function App() {
