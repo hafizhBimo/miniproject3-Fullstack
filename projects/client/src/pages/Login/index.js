@@ -69,7 +69,6 @@ const LoginPage = () => {
               value={props.values.password}
             />
           </div>
-
           <Button type="submit">Submit</Button>
         </form>
       )}
