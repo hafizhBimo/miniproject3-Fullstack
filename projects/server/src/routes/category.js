@@ -1,7 +1,8 @@
-const { category: authCategory } = require("./../controller");
+const { category: categoryController } = require("./../controller");
 const router = require("express").Router();
 
-router.get("/categories", authCategory.getAllCategories);
-router.post("/new-category", authCategory.addCategory);
+router.get("/categories", categoryController.getAllCategories);
+router.post("/new-category", categoryController.addCategory);
+router.patch("/modify-category", categoryController.modifyCategory);
 
 module.exports = router;

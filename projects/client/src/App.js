@@ -12,17 +12,21 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import Navbar from "./component/Navbar";
-import Home from "./component/Home";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/Login";
+import HomePage from "./pages/HomePage";
+import ManageCategoryPage from "./pages/ManageCategoryPage";
+import NavbarComponent from "./component/Navbar";
+import FooterComponent from "./component/FooterComponent";
 import CreateProductListing from "./pages/Create Product Listing";
 import ModifyProductListing from "./pages/Modify Product Listing";
 
 const Layout = () => {
   return (
     <>
-      <Navbar />
+      <NavbarComponent />
       <Outlet />
+      <FooterComponent />
     </>
   );
 };
@@ -30,7 +34,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
-    children: [{ path: "/", element: <Home /> }],
+    children: [{ path: "/", element: <HomePage /> }],
   },
   {
     path: "/Register",
@@ -41,13 +45,14 @@ const router = createBrowserRouter([
     element: <LoginPage />,
   },
   {
-    path: "/CreateProductListing",
-    element: <CreateProductListing />,
+    path: "/ManageCategory",
+    element: <ManageCategoryPage />,
   },
   {
     path: "/ModifyProductListing/:id",
     element: <ModifyProductListing />,
   },
+  { path: "/CreateProductListing", element: <CreateProductListing /> },
 ]);
 
 function App() {
