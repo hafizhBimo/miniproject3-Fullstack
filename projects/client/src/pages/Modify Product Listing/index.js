@@ -7,6 +7,10 @@ import { Link, useNavigate } from 'react-router-dom';
 
 const ModifyProductListing = () => {
 
+const getLastItem = thePath => thePath.substring(thePath.lastIndexOf('/') + 1)
+
+  const currurl = getLastItem(window.location.href)
+
   const [value, setValue] = useState("");
   const [categoryData, setCategoryData] = useState([]);
   const [selectedItem, setSelectedItem] = useState('');
@@ -41,7 +45,7 @@ const ModifyProductListing = () => {
     data.append("file", file);
 
     axios
-      .post("http://localhost:8000/api/product", data, {
+      .patch(`http://localhost:8000/api/product/${currurl}`, data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -78,7 +82,7 @@ const ModifyProductListing = () => {
             <div className="mb-2 block">
             <Label
               htmlFor="name"
-              value="Product Name"
+              value="change name of product"
             />
               <TextInput
                 id="name"
@@ -90,7 +94,7 @@ const ModifyProductListing = () => {
               />
               <Label
               htmlFor="price"
-              value="Price"
+              value="change price"
               />
               <TextInput
                 type="text"
@@ -104,7 +108,7 @@ const ModifyProductListing = () => {
                 <div className="mb-2 block">
                 <Label
                     htmlFor="description"
-                    value="Description"
+                    value="change product description"
                 />
                 <Textarea
                    type="text"
@@ -122,7 +126,7 @@ const ModifyProductListing = () => {
                 <div className="mb-2 block">
                         <Label
                             htmlFor="file"
-                            value="Upload picture of product here"
+                            value="Upload new picture of product"
                         />
                         <FileInput
                         type="file"

@@ -16,6 +16,7 @@ import Home from "./component/Home";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/Login";
 import CreateProductListing from "./pages/Create Product Listing";
+import ModifyProductListing from "./pages/Modify Product Listing";
 
 const Layout = () => {
   return (
@@ -44,7 +45,7 @@ const router = createBrowserRouter([
     element: <CreateProductListing />,
   },
   {
-    path: "/ModifyProductListing",
+    path: "/ModifyProductListing/:id",
     element: <ModifyProductListing />,
   },
 ]);

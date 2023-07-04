@@ -41,9 +41,13 @@ module.exports = {
     const userId = req.user.id;
     const modifyId = req.params.id;
 
-    const { name, description, price, categoryId } = req.body;
-    const imageUrl = setFromFileNameToDBValue(req.file.filename);
+   
+   
 
+    const { name, description, price, categoryId } = req.body;
+
+    
+    
     try {
 
       const isExist = await db.Products.findOne({
@@ -80,8 +84,8 @@ module.exports = {
         productData.price = price;
       }
 
-      if (imageUrl) {
-        productData.imageUrl = imageUrl;
+      if (req.file) {
+        productData.imageUrl = setFromFileNameToDBValue(req.file.filename);
       }
 
       if (categoryId) {
