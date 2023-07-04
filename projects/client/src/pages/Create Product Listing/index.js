@@ -9,7 +9,7 @@ const CreateProductListing = () => {
 
   const [value, setValue] = useState("");
   const [categoryData, setCategoryData] = useState([]);
-  const [selectedItem, setSelectedItem] = useState('');
+  const [selectedItem, setSelectedItem] = useState('1');
 
   const navigate = useNavigate();
 
