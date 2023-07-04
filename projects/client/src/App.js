@@ -46,7 +46,8 @@ const router = createBrowserRouter([
   },
   {
     path: "/ManageCategory",
-    element: <ManageCategoryPage />,
+    element: <Layout />,
+    children: [{ path: "/ManageCategory", element: <ManageCategoryPage /> }],
   },
   {
     path: "/ModifyProductListing/:id",

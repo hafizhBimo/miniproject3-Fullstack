@@ -43,10 +43,9 @@ const ModifyCategory = ({ categoryData }) => {
         })}
       </Dropdown>
       <div className="mb-2 block">
-        <Label htmlFor="editCategory1" value="new category name" />
+        <Label htmlFor="editCategory1" value="category name" />
       </div>
       <TextInput
-        className="input-wrapper"
         id="editCategory1"
         name="editCategory1"
         type="text"
