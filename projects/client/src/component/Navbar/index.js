@@ -21,10 +21,9 @@ const NavbarComponent = () => {
       </div>
       <Navbar.Collapse>
         <Navbar.Link href="/">Home</Navbar.Link>
-        <Navbar.Link href="#">About</Navbar.Link>
-        <Navbar.Link href="#">Services</Navbar.Link>
-        <Navbar.Link href="#">Pricing</Navbar.Link>
-        <Navbar.Link href="#">Contact</Navbar.Link>
+        <Navbar.Link href="#">Your store</Navbar.Link>
+        <Navbar.Link href="/CreateProductListing">Manage Product</Navbar.Link>
+        <Navbar.Link href="/ManageCategory">Manage Category</Navbar.Link>
       </Navbar.Collapse>
     </Navbar>
   );

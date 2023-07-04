@@ -2,6 +2,7 @@ import { useState, useEffect, Children } from "react";
 import axios from "axios";
 import AddCategoryButton from "../../component/AddCategoryButton";
 import ModifyCategory from "../../component/ModifyCategory";
+import "./style.css";
 
 const ManageCategoryPage = () => {
   const [categoryData, setCategoryData] = useState([]);
@@ -13,7 +14,7 @@ const ManageCategoryPage = () => {
   console.log(categoryData, "ini categorydadta");
 
   return (
-    <div>
+    <div className="manage-category-wrapper">
       <AddCategoryButton />
       <ModifyCategory categoryData={categoryData} />
     </div>

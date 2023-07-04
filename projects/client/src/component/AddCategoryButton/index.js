@@ -9,6 +9,7 @@ import {
 import { Formik } from "formik";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import "./style.css"
 
 const AddCategoryButton = () => {
   const navigate = useNavigate();
@@ -40,7 +41,7 @@ const AddCategoryButton = () => {
         >
           <div>
             <div className="mb-2 block">
-              <Label htmlFor="category1" value="input your new category" />
+              <Label htmlFor="category1" value="category name" />
             </div>
             <TextInput
               id="newCategory1"
