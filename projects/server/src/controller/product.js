@@ -13,6 +13,7 @@ module.exports = {
     const sellerId = req.user.id;
     console.log(req.user);
     const { name, description, price, categoryId } = req.body;
+
     const imageUrl = setFromFileNameToDBValue(req.file.filename);
     try {
       const newProductListing = await db.Products.create({
@@ -135,7 +136,7 @@ module.exports = {
         where,
         include: [
           { model: db.User, attributes: ["username"], as: "User" },
-          { model: db.Category, attributes:["name"], as: "Category" },
+          { model: db.Category, attributes: ["name"], as: "Category" },
         ],
         order: [[pagination.sortBy, pagination.sortOrder]],
         limit: pagination.perPage,

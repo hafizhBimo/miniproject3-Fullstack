@@ -27,7 +27,7 @@ const ModifyCategory = ({ categoryData }) => {
     }
   };
   return (
-    <div className="flex max-w-md flex-col gap-4">
+    <div className="flex max-w-md flex-col gap-4 my-4">
       <Dropdown label={categoryName.old}>
         {categoryData.map((data) => {
           return (
@@ -42,14 +42,14 @@ const ModifyCategory = ({ categoryData }) => {
           );
         })}
       </Dropdown>
-      <div className="mb-2 block">
-        <Label htmlFor="editCategory1" value="category name" />
+      <div className="mb-2 block text-left">
+        <Label htmlFor="editCategory1" value="new category name" />
       </div>
       <TextInput
         id="editCategory1"
         name="editCategory1"
         type="text"
-        placeholder="new category"
+        placeholder="ex. Arcade, Shooter, Card, etc."
         value={categoryName.new}
         onChange={(e)=>setCategoryName({...categoryName,new:e.target.value})}
       />
