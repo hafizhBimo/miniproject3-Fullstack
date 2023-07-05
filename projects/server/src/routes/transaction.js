@@ -15,5 +15,9 @@ router.patch("/cart",
     authTransaction.emptyCart
 );
 
+router.patch("/cart/:id",
+    authTransaction.removeItemfromCart
+);
+
 
 module.exports = router;
