@@ -7,5 +7,13 @@ router.post("/product/:id",
     authTransaction.addItemToCart
 );
 
+router.get("/cart",
+    authTransaction.getCart
+);
+
+router.patch("/cart",
+    authTransaction.emptyCart
+);
+
 
 module.exports = router;
