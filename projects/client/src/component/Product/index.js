@@ -19,29 +19,6 @@ const Product = () => {
   // categories
   const [categories, setCategories] = useState([]);
 
-  //   useEffect(() => {
-
-  //     axios
-  //       .get(
-  //         "http://localhost:8000/api/product?search=&order=DESC&categoryId=&page=1"
-  //       )
-  //       .then((response) => {
-  //         setUserData(response.data.data);
-  //         setTotalPages(Math.ceil(response.data.pagination.totalData / 9));
-  //         console.log(response, "ini userdata");
-  //       })
-  //       .catch((err) => console.log(err));
-  //   }, []);
-
-  //   useEffect(() => {
-  //     axios
-  //       .get("http://localhost:8000/api/categories")
-  //       .then((response) => {
-  //         setCategories(response.data.list);
-  //       })
-  //       .catch((err) => console.log(err));
-  //   }, []);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -114,21 +91,13 @@ const Product = () => {
             placeholder="Search"
             onChange={handleSearchChange}
           ></input>
-        <select value={category} onChange={handleCategoryChange}>
-          <option value={""}>All</option>
-          {/* {console.log(categories.list)}
-          {console.log("typeof: " + typeof categories.list)} */}
-          {/* {Array(categories.list).map((category) =>
-            <option value={category.ijd}>{category.name}</option>
-          )} */}
-          {/* {JSON.stringify(categories).map((category) => {
-            <option value={category.id}>{category.name}</option>;
-          })} */}
-          {categories.map((category) => (
-            <option value={category.id}>{category.name}</option>
-          ))}
-        </select>
-        <select value={sortValue} onChange={handleSortChange}>
+          <select value={category} onChange={handleCategoryChange}>
+            <option value={""}>All</option>
+            {categories.map((category) => (
+              <option value={category.id}>{category.name}</option>
+            ))}
+          </select>
+          <select value={sortValue} onChange={handleSortChange}>
             <option value={"ASC"}>ASC</option>
             <option value={"DESC"}>DESC</option>
           </select>
@@ -165,17 +134,17 @@ const Product = () => {
             </div>
           </Card>
         ))}
-        </div>
-        <div className="flex items-center justify-center text-center">
-          <FBP
-            currentPage={currentPage}
-            layout="pagination"
-            onPageChange={handlePage}
-            showIcons={true}
-            totalPages={totalPages}
-            previousLabel="Go back"
-            nextLabel="Go forward"
-          />
+      </div>
+      <div className="flex items-center justify-center text-center">
+        <FBP
+          currentPage={currentPage}
+          layout="pagination"
+          onPageChange={handlePage}
+          showIcons={true}
+          totalPages={totalPages}
+          previousLabel="Go back"
+          nextLabel="Go forward"
+        />
       </div>
     </>
   );
