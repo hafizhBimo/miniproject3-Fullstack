@@ -19,7 +19,7 @@ const Product = () => {
   }, []);
 
   return (
-    <div className="grid grid-cols-4 gap-3">
+    <div className="grid grid-cols-4 gap-4 m-6">
       {userData.map((Product) => (
         <Card
           key={Product.id}

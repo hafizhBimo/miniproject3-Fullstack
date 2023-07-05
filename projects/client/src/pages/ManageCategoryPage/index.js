@@ -11,12 +11,22 @@ const ManageCategoryPage = () => {
       setCategoryData(response.data.list);
     });
   }, []);
-  
 
   return (
-    <div className="manage-category-wrapper">
-      <AddCategoryButton />
-      <ModifyCategory categoryData={categoryData} />
+    <div className="flex justify-center">
+      <div
+        className="flex flex-col items-center"
+        style={{
+          width: "100%",
+          maxWidth: "600px",
+          textAlign: "-webkit-center",
+        }}
+      >
+        <div style={{ width: "100%" }}>
+          <AddCategoryButton />
+          <ModifyCategory categoryData={categoryData} />
+        </div>
+      </div>
     </div>
   );
 };

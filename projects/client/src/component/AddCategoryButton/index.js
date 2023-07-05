@@ -40,8 +40,8 @@ const AddCategoryButton = () => {
           onSubmit={props.handleSubmit}
         >
           <div>
-            <div className="mb-2 block">
-              <Label htmlFor="category1" value="category name" />
+            <div className="mb-2 block text-left">
+              <Label htmlFor="category1" value="new category name" />
             </div>
             <TextInput
               id="newCategory1"
