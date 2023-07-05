@@ -19,6 +19,7 @@ app.use(express.json());
 app.use("/api/auth", routes.auth);
 app.use("/api", routes.category);
 app.use("/api/product", routes.product);
+app.use("/api", routes.transaction);
 
 app.get("/api", (req, res) => {
   res.send(`Hello, this is my API`);
