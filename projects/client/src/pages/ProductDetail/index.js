@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 
 const ProductDetail = () => {
   const [userData, setUserData] = useState([]);
+  const [cartData, setCartData] = useState([]);
   const { id } = useParams();
 
   useEffect(() => {
@@ -15,6 +16,25 @@ const ProductDetail = () => {
       })
       .catch((err) => console.log(err));
   }, []);
+
+  const handleClick = (productId) => {
+    const token = localStorage.getItem("token")
+
+    if(token === null){
+        navigate("/login");
+    }else{
+      axios.post(
+        `http://localhost:8000/api/product/${productId}`,
+        {
+          headers: {Authorization: `Bearer ${token}`},
+        },
+
+      ).then((response) => {
+          setCartData(response);
+        });
+    }
+
+  }
 
   return (
     <div>
@@ -38,7 +58,7 @@ const ProductDetail = () => {
                     {Product.price}
                   </div>
                   {/* disini tambahin fungsi onclick */}
-                  <button className=" bg-black py-4 px-8 text-white">
+                  <button onClick={() => handleClick(Product.id)} className=" bg-black py-4 px-8 text-white">
                     Add to cart
                   </button>
                 </div>
