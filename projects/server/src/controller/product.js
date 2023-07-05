@@ -120,7 +120,7 @@ module.exports = {
             },
           },
           { name: { [db.Sequelize.Op.like]: `%${pagination.search}%` } },
-          { content: { [db.Sequelize.Op.like]: `%${pagination.search}%` } },
+          { description: { [db.Sequelize.Op.like]: `%${pagination.search}%` } },
         ];
       }
 
