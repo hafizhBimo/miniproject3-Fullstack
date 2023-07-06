@@ -22,6 +22,8 @@ import FooterComponent from "./component/FooterComponent";
 import CreateProductListing from "./pages/Create Product Listing";
 import ModifyProductListing from "./pages/Modify Product Listing";
 import NavbarLogged from "./component/NavbarLogged";
+import { useDispatch } from "react-redux";
+import { setToken } from "./features/authSlice";
 
 const Layout = () => {
   return (
@@ -61,6 +63,14 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+  const dispatch = useDispatch();
+  useEffect(()=> {
+    const token = localStorage.getItem("token");
+    if (token) {
+      dispatch(setToken(token))
+    }
+  }, [])
+
   return (
     <div>
       <RouterProvider router={router} />
