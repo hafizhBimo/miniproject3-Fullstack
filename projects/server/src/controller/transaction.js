@@ -108,5 +108,41 @@ module.exports = {
   
   },
 
+  async checkoutOrder(req, res) {
+    const sellerId = req.user.id;
+
+  try {
+    
+    const isExist = await db.Products.findOne({
+      where: { id: productId },
+    });
+    if (!isExist) {
+      return res.status(404).send({
+        message: "product not found",
+      });
+    }
+
+    const singleProduct = await db.Products.findOne({
+      where: { id: productId },
+    });
+
+    const newCartProduct = await db.Cart_items.create({
+      product_id: productId,
+      user_id: sellerId,
+      quantity: quantity
+    });
+
+  res.status(201).send({
+      message: "item succesfully added to cart",
+      data: singleProduct.name,
+  });
+  } catch (error) {
+    res.status(500).send({
+      message: "fatal error on server",
+      error: error.message,
+    });
+  }
+},
+
 
 }
