@@ -1,8 +1,10 @@
 import { Button, Dropdown, Navbar, Avatar } from "flowbite-react";
+import { useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
+import { setToken } from "../../features/authSlice";
 
 const NavbarLogin = () => {
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
   return (
     <Navbar fluid rounded>
       <Navbar.Brand href="/">
@@ -35,7 +37,11 @@ const NavbarLogin = () => {
           </Dropdown.Item>
           <Dropdown.Divider />
           <Dropdown.Item>
-            <a href="/" onClick={() => localStorage.removeItem("token")}>
+            <a href="#" onClick={(e) => {
+              e.preventDefault();
+              localStorage.removeItem("token");
+              dispatch(setToken(null))
+              }}>
               Sign Out
             </a>
           </Dropdown.Item>

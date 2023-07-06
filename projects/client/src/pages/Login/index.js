@@ -7,14 +7,16 @@ import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import React from "react";
+import { useDispatch } from "react-redux";
+import { setToken } from "../../features/authSlice";
 
 const createSchema = Yup.object().shape({
   password: Yup.string()
     .min(6, "Password must be 6 characters at minimum")
     .required("Password is required"),
 });
-
 const LoginPage = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleSubmit = (value, action) => {
     console.log("tes");
@@ -23,6 +25,7 @@ const LoginPage = () => {
         .post(`http://localhost:8000/api/auth/login`, value)
         .then((response) => {
           localStorage.setItem("token", response.data.accessToken);
+          dispatch(setToken(response.data.accessToken));
         });
     } catch (error) {
       return;
