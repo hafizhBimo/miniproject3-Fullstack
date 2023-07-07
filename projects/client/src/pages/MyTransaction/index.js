@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Sidebar } from "flowbite-react";
 import {
   HiArrowSmRight,
@@ -11,9 +12,10 @@ import {
 import CartList from "../../component/CartList";
 
 const MyTransaction = () => {
+  const [cartData, setCartData] = useState(0);
   return (
-    <div className="grid grid-cols-2">
-      <div>
+    <div className="grid grid-cols-3">
+      <div className="cols-span-1">
         <Sidebar aria-label="Default sidebar example">
           <Sidebar.Items>
             <Sidebar.ItemGroup>
@@ -23,7 +25,7 @@ const MyTransaction = () => {
               <Sidebar.Item
                 href="#"
                 icon={HiShoppingCart}
-                label="Pro"
+                label={cartData}
                 labelColor="dark"
               >
                 <p>cart</p>
@@ -35,8 +37,9 @@ const MyTransaction = () => {
           </Sidebar.Items>
         </Sidebar>
       </div>
-      <div>
-        <CartList />
+      <div className="col-start-2 col-end-4">
+        <h1>Cart</h1>
+        <CartList setCartData={setCartData} />
       </div>
     </div>
   );
