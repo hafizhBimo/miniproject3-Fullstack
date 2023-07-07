@@ -56,6 +56,10 @@ module.exports = {
   try {
     const allCart = await db.Cart_items.findAll({
       where: {user_id: userId},
+      include: [
+        { model: db.Products, attributes: ["name", "price", "imageUrl"], as: "Product" },
+        { model: db.User, attributes: ["storeName"], as: "User" },
+      ],
     });
 
   res.status(201).send({
