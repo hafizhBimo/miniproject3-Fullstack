@@ -19,15 +19,24 @@ module.exports = {
         });
       }
 
+      const isExistCart = await db.Cart_items.findOne({
+        where: { product_id: productId, user_id: userId },
+      });
+
       const singleProduct = await db.Products.findOne({
         where: { id: productId },
       });
 
-      const newCartProduct = await db.Cart_items.create({
+      if(isExistCart){
+        isExistCart.quantity = isExistCart.quantity + quantity
+        await isExistCart.save();
+      }else{
+        const newCartProduct = await db.Cart_items.create({
         product_id: productId,
         user_id: userId,
         quantity: quantity
-      });
+      });}
+
 
     res.status(201).send({
         message: "item succesfully added to cart",
@@ -73,7 +82,7 @@ module.exports = {
         });
 
         const allCart = await db.Cart_items.findAll({
-          where: {},
+          where: {user_id: userId},
         });
       
     
@@ -118,6 +127,7 @@ module.exports = {
   try {
 
     const totalCart = await db.Cart_items.findAll({
+      where: {user_id: userId},
       include: [
         { model: db.Products, attributes: ["price"], as: "Product" },
       ],
@@ -134,6 +144,14 @@ module.exports = {
       total: totalPrice,
       address: address,
     });
+
+    await totalCart.map((cart) => 
+        db.Order_items.create({
+          order_id: newOrderDetails.id,
+          product_id: cart.product_id,
+          quantity: cart.quantity,
+      }))
+
 
     const emptyAllCartItems = await db.Cart_items.destroy({ 
       where: {user_id: userId}
