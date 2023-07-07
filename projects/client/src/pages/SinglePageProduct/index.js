@@ -94,7 +94,10 @@ const SinglePageProduct = () => {
                     <button onClick={() => setQuantityData(quantityData + 1)}>
                       <box-icon name="plus"></box-icon>
                     </button>
-                    <button className="flex text-white bg-indigo-500 border-0 py-1 px-7  focus:outline-none hover:bg-indigo-600 rounded">
+                    <button
+                      className="flex text-white bg-indigo-500 border-0 py-1 px-7  focus:outline-none hover:bg-indigo-600 rounded"
+                      onClick={() => handleClick(Product.id)}
+                    >
                       <box-icon name="cart-add"></box-icon>
                     </button>
                   </div>
