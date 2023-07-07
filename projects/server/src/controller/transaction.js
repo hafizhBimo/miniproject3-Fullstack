@@ -3,7 +3,7 @@ const db = require("../models");
 module.exports = {
 
     async addItemToCart(req, res) {
-      const sellerId = req.user.id;
+      const userId = req.user.id;
   
       const productId = req.params.id;
 
@@ -25,7 +25,7 @@ module.exports = {
 
       const newCartProduct = await db.Cart_items.create({
         product_id: productId,
-        user_id: sellerId,
+        user_id: userId,
         quantity: quantity
       });
 
@@ -42,10 +42,11 @@ module.exports = {
   },
 
   async getCart(req, res) {
+    const userId = req.user.id;
 
   try {
     const allCart = await db.Cart_items.findAll({
-      where: {},
+      where: {user_id: userId},
     });
 
   res.status(201).send({
@@ -61,13 +62,14 @@ module.exports = {
 },
 
   async removeItemfromCart(req, res) {
+    const userId = req.user.id;
 
     cartId = req.params.id
 
     try {
     
       const removeCartItem = await db.Cart_items.destroy({ 
-        where: {id : cartId}
+        where: {id : cartId, user_id: userId}
         });
 
         const allCart = await db.Cart_items.findAll({
@@ -88,11 +90,12 @@ module.exports = {
   },
 
     async emptyCart(req, res) {
+      const userId = req.user.id;
 
     try {
 
       const emptyAllCartItems = await db.Cart_items.destroy({ 
-        where: {}
+        where: {user_id: userId}
         });
       
 
@@ -109,7 +112,7 @@ module.exports = {
   },
 
   async checkoutOrder(req, res) {
-    const sellerId = req.user.id;
+    const userId = req.user.id;
     const address = req.body.address;
 
   try {
@@ -127,13 +130,13 @@ module.exports = {
 
 
     const newOrderDetails = await db.Order_details.create({
-      user_id: sellerId,
+      user_id: userId,
       total: totalPrice,
       address: address,
     });
 
     const emptyAllCartItems = await db.Cart_items.destroy({ 
-      where: {}
+      where: {user_id: userId}
       });
 
   res.status(201).send({
