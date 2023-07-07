@@ -24,6 +24,7 @@ import ModifyProductListing from "./pages/Modify Product Listing";
 import NavbarLogged from "./component/NavbarLogged";
 import { useDispatch } from "react-redux";
 import { setToken } from "./features/authSlice";
+import SinglePageProduct from "./pages/SinglePageProduct";
 
 const Layout = () => {
   return (
@@ -40,7 +41,7 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       { path: "/", element: <HomePage /> },
-      { path: "/Product/:id", element: <ProductDetail /> },
+      { path: "/Product/:id", element: <SinglePageProduct /> },
       { path: "/Register", element: <RegisterPage /> },
       {
         path: "/Login",
