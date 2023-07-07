@@ -4,6 +4,7 @@ import { Card, Badge } from "flowbite-react";
 import rupiah from "../../utils/currency";
 import { Pagination as FBP } from "flowbite-react";
 import { Link } from "react-router-dom";
+import TopProduct from "../../component/TopProduct";
 
 const Product = () => {
   const [userData, setUserData] = useState([]);
@@ -15,7 +16,8 @@ const Product = () => {
   const [category, setCategory] = useState("");
 
   // Sort
-  const [sortValue, setSortValue] = useState("DESC");
+  const [sortValue, setSortValue] = useState("");
+  const [orderValue, setOrderValue] = useState("");
 
   // categories
   const [categories, setCategories] = useState([]);
@@ -24,7 +26,7 @@ const Product = () => {
     const fetchData = async () => {
       try {
         const response1 = await axios.get(
-          "http://localhost:8000/api/product?search=&order=DESC&categoryId=&page=1"
+          `http://localhost:8000/api/product?search=&order=&categoryId=&sort=&page=`
         );
 
         setUserData(response1.data.data);
@@ -34,7 +36,6 @@ const Product = () => {
         );
 
         setCategories(response2.data.list);
-        console.log(response2.data.list, "babi");
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -42,18 +43,26 @@ const Product = () => {
 
     fetchData();
   }, []);
+
+  const handleOrderChange = (event) => {
+    const neworderValue = event.target.value;
+    setOrderValue(neworderValue);
+    search(term, category, neworderValue, sortValue);
+  };
+
   const handleSortChange = (event) => {
     const newSortValue = event.target.value;
     setSortValue(newSortValue);
-    search(term, category, newSortValue);
+    search(term, category, orderValue, newSortValue);
   };
 
   const handlePage = (page) => {
-    setCurrentPage(page);
     axios
-      .get(`http://localhost:8000/api/product?page=${page}`)
+      .get(`http://localhost:8000/api/product?page=${page}&order=${orderValue}&sort=${sortValue}`)
       .then((response) => {
+        setCurrentPage(page);
         setUserData(response.data.data);
+        console.log(response.data.data);
         setTotalPages(Math.ceil(response.data.pagination.totalData / 9));
       })
       .catch((err) => console.log(err));
@@ -61,21 +70,21 @@ const Product = () => {
 
   const handleSearchChange = (event) => {
     setTerm(event.target.value);
-    search(event.target.value, category, sortValue);
+    search(event.target.value, category, orderValue, sortValue);
   };
 
   const handleCategoryChange = (event) => {
     // console.log(event.target.value);
     setCategory(event.target.value);
-    search(term, event.target.value, sortValue);
+    search(term, event.target.value, orderValue, sortValue);
   };
 
-  const search = (term, category, sortValue) => {
+  const search = (term, category, orderValue, sortValue) => {
     console.log("Term: " + term);
 
     axios
       .get(
-        `http://localhost:8000/api/product?search=${term}&order=${sortValue}&categoryId=${category}`
+        `http://localhost:8000/api/product?search=${term}&order=${orderValue}&categoryId=${category}&sort=${sortValue}`
       )
       .then((response) => {
         setUserData(response.data.data);
@@ -83,9 +92,16 @@ const Product = () => {
       .catch((err) => console.log(err));
   };
 
+  const onPageChange = (page) => {
+    if (page != currentPage) {
+      handlePage(page);
+    }
+  };
+
   return (
     <>
       <div>
+        {/* <TopProduct /> */}
         <form>
           <input
             type="text"
@@ -98,9 +114,15 @@ const Product = () => {
               <option value={category.id}>{category.name}</option>
             ))}
           </select>
-          <select value={sortValue} onChange={handleSortChange}>
+          <select value={orderValue} onChange={handleOrderChange}>
+            <option value={""}>--orderBy--</option>
             <option value={"ASC"}>ASC</option>
             <option value={"DESC"}>DESC</option>
+          </select>
+          <select value={sortValue} onChange={handleSortChange}>
+            <option value={""}>--sortBy--</option>
+            <option value={"price"}>price</option>
+            <option value={"name"}>name</option>
           </select>
         </form>
       </div>
@@ -134,7 +156,7 @@ const Product = () => {
         <FBP
           currentPage={currentPage}
           layout="pagination"
-          onPageChange={handlePage}
+          onPageChange={onPageChange}
           showIcons={true}
           totalPages={totalPages}
           previousLabel="Go back"
