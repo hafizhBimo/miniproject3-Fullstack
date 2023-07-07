@@ -8,14 +8,17 @@ router.post("/product/:id",
 );
 
 router.get("/cart",
+    authMiddleware.verifyToken,
     authTransaction.getCart
 );
 
 router.patch("/cart",
+    authMiddleware.verifyToken,
     authTransaction.emptyCart
 );
 
 router.patch("/cart/:id",
+    authMiddleware.verifyToken,
     authTransaction.removeItemfromCart
 );
 

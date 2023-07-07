@@ -3,7 +3,7 @@ const db = require("../models");
 module.exports = {
 
     async addItemToCart(req, res) {
-      const sellerId = req.user.id;
+      const userId = req.user.id;
   
       const productId = req.params.id;
 
@@ -19,15 +19,24 @@ module.exports = {
         });
       }
 
+      const isExistCart = await db.Cart_items.findOne({
+        where: { product_id: productId, user_id: userId },
+      });
+
       const singleProduct = await db.Products.findOne({
         where: { id: productId },
       });
 
-      const newCartProduct = await db.Cart_items.create({
+      if(isExistCart){
+        isExistCart.quantity = isExistCart.quantity + quantity
+        await isExistCart.save();
+      }else{
+        const newCartProduct = await db.Cart_items.create({
         product_id: productId,
-        user_id: sellerId,
+        user_id: userId,
         quantity: quantity
-      });
+      });}
+
 
     res.status(201).send({
         message: "item succesfully added to cart",
@@ -42,10 +51,11 @@ module.exports = {
   },
 
   async getCart(req, res) {
+    const userId = req.user.id;
 
   try {
     const allCart = await db.Cart_items.findAll({
-      where: {},
+      where: {user_id: userId},
     });
 
   res.status(201).send({
@@ -61,17 +71,18 @@ module.exports = {
 },
 
   async removeItemfromCart(req, res) {
+    const userId = req.user.id;
 
     cartId = req.params.id
 
     try {
     
       const removeCartItem = await db.Cart_items.destroy({ 
-        where: {id : cartId}
+        where: {id : cartId, user_id: userId}
         });
 
         const allCart = await db.Cart_items.findAll({
-          where: {},
+          where: {user_id: userId},
         });
       
     
@@ -88,11 +99,12 @@ module.exports = {
   },
 
     async emptyCart(req, res) {
+      const userId = req.user.id;
 
     try {
 
       const emptyAllCartItems = await db.Cart_items.destroy({ 
-        where: {}
+        where: {user_id: userId}
         });
       
 
@@ -109,12 +121,13 @@ module.exports = {
   },
 
   async checkoutOrder(req, res) {
-    const sellerId = req.user.id;
+    const userId = req.user.id;
     const address = req.body.address;
 
   try {
 
     const totalCart = await db.Cart_items.findAll({
+      where: {user_id: userId},
       include: [
         { model: db.Products, attributes: ["price"], as: "Product" },
       ],
@@ -127,13 +140,21 @@ module.exports = {
 
 
     const newOrderDetails = await db.Order_details.create({
-      user_id: sellerId,
+      user_id: userId,
       total: totalPrice,
       address: address,
     });
 
+    await totalCart.map((cart) => 
+        db.Order_items.create({
+          order_id: newOrderDetails.id,
+          product_id: cart.product_id,
+          quantity: cart.quantity,
+      }))
+
+
     const emptyAllCartItems = await db.Cart_items.destroy({ 
-      where: {}
+      where: {user_id: userId}
       });
 
   res.status(201).send({
