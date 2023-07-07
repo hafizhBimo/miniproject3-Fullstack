@@ -3,16 +3,15 @@ import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 
 const ProductDetail = () => {
-
   const navigate = useNavigate();
   const [userData, setUserData] = useState([]);
   const [cartData, setCartData] = useState([]);
-  const [quantityData, setQuantityData] = useState(1)
+  const [quantityData, setQuantityData] = useState(1);
   const { id } = useParams();
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8000/api/product/${id}`)
+      .get(`http://localhost:8000/api/product`)
       .then((response) => {
         console.log("WING", response);
         setUserData([response.data.data]);
@@ -21,32 +20,26 @@ const ProductDetail = () => {
   }, []);
 
   const handleClick = (productId) => {
-    const token = localStorage.getItem("token")
+    const token = localStorage.getItem("token");
 
-    if(token === null){
-        navigate("/login");
-    }else{
-      axios.post(
-        `http://localhost:8000/api/product/${productId}`,
-        {
-          quantity: quantityData
-        },
-        {
-          headers: {Authorization: `Bearer ${token}`},
-        },
-
-      ).then((response) => {
+    if (token === null) {
+      navigate("/login");
+    } else {
+      axios
+        .post(
+          `http://localhost:8000/api/product/${productId}`,
+          {
+            quantity: quantityData,
+          },
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        )
+        .then((response) => {
           setCartData(response);
-        })
-        // .catch((err) => {
-        //   if (err.message === "Request failed with status code 401") {
-        //     navigate("/login");
-        //   }
-        // });
+        });
     }
-
-  }
-
+  };
 
   return (
     <div>
@@ -70,15 +63,24 @@ const ProductDetail = () => {
                     {Product.price}
                   </div>
                   {/* disini tambahin fungsi onclick */}
-                  <button onClick={() => handleClick(Product.id)} className=" bg-black py-4 px-8 text-white">
+                  <button
+                    onClick={() => handleClick(Product.id)}
+                    className=" bg-black py-4 px-8 text-white"
+                  >
                     Add to cart
                   </button>
                   <div>
-                    <button onClick={() => setQuantityData(quantityData - 1)} className=" bg-blue-500 py-2 px-4 text-white">
+                    <button
+                      onClick={() => setQuantityData(quantityData - 1)}
+                      className=" bg-blue-500 py-2 px-4 text-white"
+                    >
                       -
                     </button>
                     <div> {quantityData} </div>
-                    <button onClick={() => setQuantityData(quantityData + 1)} className=" bg-blue-500 py-2 px-4 text-white">
+                    <button
+                      onClick={() => setQuantityData(quantityData + 1)}
+                      className=" bg-blue-500 py-2 px-4 text-white"
+                    >
                       +
                     </button>
                   </div>

@@ -185,6 +185,10 @@ module.exports = {
 
       const singleProduct = await db.Products.findOne({
         where: { id: productId },
+        include: [
+          { model: db.User, attributes: ["username"], as: "User" },
+          { model: db.Category, attributes: ["name"], as: "Category" },
+        ],
       });
 
       res.status(201).send({
