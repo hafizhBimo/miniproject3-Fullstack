@@ -58,7 +58,7 @@ const Product = () => {
 
   const handlePage = (page) => {
     axios
-      .get(`http://localhost:8000/api/product?page=${page}`)
+      .get(`http://localhost:8000/api/product?page=${page}&order=${orderValue}&sort=${sortValue}`)
       .then((response) => {
         setCurrentPage(page);
         setUserData(response.data.data);
