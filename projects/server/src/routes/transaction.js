@@ -19,5 +19,10 @@ router.patch("/cart/:id",
     authTransaction.removeItemfromCart
 );
 
+router.post("/cart/checkout",
+    authMiddleware.verifyToken,
+    authTransaction.checkoutOrder
+);
+
 
 module.exports = router;

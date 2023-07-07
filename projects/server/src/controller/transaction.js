@@ -108,5 +108,45 @@ module.exports = {
   
   },
 
+  async checkoutOrder(req, res) {
+    const sellerId = req.user.id;
+    const address = req.body.address;
+
+  try {
+
+    const totalCart = await db.Cart_items.findAll({
+      include: [
+        { model: db.Products, attributes: ["price"], as: "Product" },
+      ],
+    });
+    
+    const priceQuantity = totalCart.map(
+      (quantity, price) => quantity.quantity * quantity.Product.price)
+
+    const totalPrice = priceQuantity.reduce((total, n) => total + n, 0)
+
+
+    const newOrderDetails = await db.Order_details.create({
+      user_id: sellerId,
+      total: totalPrice,
+      address: address,
+    });
+
+    const emptyAllCartItems = await db.Cart_items.destroy({ 
+      where: {}
+      });
+
+  res.status(201).send({
+      message: "order completed",
+      data: newOrderDetails,
+  });
+  } catch (error) {
+    res.status(500).send({
+      message: "fatal error on server",
+      error: error.message,
+    });
+  }
+},
+
 
 }
