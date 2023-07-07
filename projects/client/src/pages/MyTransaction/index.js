@@ -10,9 +10,12 @@ import {
   HiCurrencyDollar,
 } from "react-icons/hi";
 import CartList from "../../component/CartList";
+import TransactionMenu from "../../component/TransactionMenu";
 
 const MyTransaction = () => {
   const [cartData, setCartData] = useState(0);
+  const [menu, setMenu] = useState(<CartList setCartData={setCartData} />);
+
   return (
     <div className="grid grid-cols-3">
       <div className="cols-span-1">
@@ -27,10 +30,16 @@ const MyTransaction = () => {
                 icon={HiShoppingCart}
                 label={cartData}
                 labelColor="dark"
+                onClick={() => setMenu(<CartList setCartData={setCartData} />)}
               >
                 <p>cart</p>
               </Sidebar.Item>
-              <Sidebar.Item href="#" icon={HiCurrencyDollar} label="3">
+              <Sidebar.Item
+                href="#"
+                icon={HiCurrencyDollar}
+                label="3"
+                onClick={() => setMenu(<TransactionMenu />)}
+              >
                 <p>Transaction</p>
               </Sidebar.Item>
             </Sidebar.ItemGroup>
@@ -38,8 +47,7 @@ const MyTransaction = () => {
         </Sidebar>
       </div>
       <div className="col-start-2 col-end-4">
-        <h1>Cart</h1>
-        <CartList setCartData={setCartData} />
+        {menu}
       </div>
     </div>
   );
