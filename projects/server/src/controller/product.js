@@ -148,6 +148,10 @@ module.exports = {
           message: "No products found matching the search query.",
         });
       }
+      // const order = []
+      // for (count sort in pagination.sortBy){
+      //   order.push([sort, pagination.sortBy[sort]])
+      // }
 
       const totalPages = Math.ceil(count / pagination.perPage);
 
