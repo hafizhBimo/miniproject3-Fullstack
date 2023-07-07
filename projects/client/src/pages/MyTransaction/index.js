@@ -7,6 +7,7 @@ import {
   HiTable,
   HiUser,
   HiViewBoards,
+  HiShoppingCart
 } from "react-icons/hi";
 
 const MyTransaction = () => {
@@ -21,14 +22,14 @@ const MyTransaction = () => {
               </Sidebar.Item>
               <Sidebar.Item
                 href="#"
-                icon={HiViewBoards}
+                icon={HiShoppingCart}
                 label="Pro"
                 labelColor="dark"
               >
-                <p>Kanban</p>
+                <p>cart</p>
               </Sidebar.Item>
               <Sidebar.Item href="#" icon={HiInbox} label="3">
-                <p>Inbox</p>
+                <p>Transaction</p>
               </Sidebar.Item>
               <Sidebar.Item href="#" icon={HiUser}>
                 <p>Users</p>
