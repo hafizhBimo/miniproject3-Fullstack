@@ -110,31 +110,35 @@ module.exports = {
 
   async checkoutOrder(req, res) {
     const sellerId = req.user.id;
+    const address = req.body.address;
 
   try {
+
+    const totalCart = await db.Cart_items.findAll({
+      include: [
+        { model: db.Products, attributes: ["price"], as: "Product" },
+      ],
+    });
     
-    const isExist = await db.Products.findOne({
-      where: { id: productId },
-    });
-    if (!isExist) {
-      return res.status(404).send({
-        message: "product not found",
-      });
-    }
+    const priceQuantity = totalCart.map(
+      (quantity, price) => quantity.quantity * quantity.Product.price)
 
-    const singleProduct = await db.Products.findOne({
-      where: { id: productId },
-    });
+    const totalPrice = priceQuantity.reduce((total, n) => total + n, 0)
 
-    const newCartProduct = await db.Cart_items.create({
-      product_id: productId,
+
+    const newOrderDetails = await db.Order_details.create({
       user_id: sellerId,
-      quantity: quantity
+      total: totalPrice,
+      address: address,
     });
+
+    const emptyAllCartItems = await db.Cart_items.destroy({ 
+      where: {}
+      });
 
   res.status(201).send({
-      message: "item succesfully added to cart",
-      data: singleProduct.name,
+      message: "order completed",
+      data: newOrderDetails,
   });
   } catch (error) {
     res.status(500).send({
