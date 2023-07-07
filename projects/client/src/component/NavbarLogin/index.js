@@ -33,7 +33,7 @@ const NavbarLogin = () => {
             <span className="block text-sm">neytiri</span>
           </Dropdown.Header>
           <Dropdown.Item>
-            <Link to="/myStore">My Store</Link>
+            <Link to="/MyTransaction">My Transaction</Link>
           </Dropdown.Item>
           <Dropdown.Divider />
           <Dropdown.Item>

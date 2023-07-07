@@ -25,7 +25,8 @@ import NavbarLogged from "./component/NavbarLogged";
 import { useDispatch } from "react-redux";
 import { setToken } from "./features/authSlice";
 import SinglePageProduct from "./pages/SinglePageProduct";
-
+import MyStorePage from "./pages/MyTransaction";
+import MyTransaction from "./pages/MyTransaction";
 const Layout = () => {
   return (
     <>
@@ -59,18 +60,19 @@ const router = createBrowserRouter([
         path: "/CreateProductListing",
         element: <CreateProductListing />,
       },
+      { path: "/MyTransaction", element: <MyTransaction /> },
     ],
   },
 ]);
 
 function App() {
   const dispatch = useDispatch();
-  useEffect(()=> {
+  useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      dispatch(setToken(token))
+      dispatch(setToken(token));
     }
-  }, [])
+  }, []);
 
   return (
     <div>
