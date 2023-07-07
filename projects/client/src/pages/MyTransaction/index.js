@@ -1,18 +1,21 @@
+import { useState } from "react";
 import { Sidebar } from "flowbite-react";
 import {
   HiArrowSmRight,
   HiChartPie,
-  HiInbox,
   HiShoppingBag,
   HiTable,
   HiUser,
-  HiViewBoards,
+  HiShoppingCart,
+  HiCurrencyDollar,
 } from "react-icons/hi";
+import CartList from "../../component/CartList";
 
 const MyTransaction = () => {
+  const [cartData, setCartData] = useState(0);
   return (
-    <div className="grid grid-cols-2">
-      <div>
+    <div className="grid grid-cols-3">
+      <div className="cols-span-1">
         <Sidebar aria-label="Default sidebar example">
           <Sidebar.Items>
             <Sidebar.ItemGroup>
@@ -21,32 +24,23 @@ const MyTransaction = () => {
               </Sidebar.Item>
               <Sidebar.Item
                 href="#"
-                icon={HiViewBoards}
-                label="Pro"
+                icon={HiShoppingCart}
+                label={cartData}
                 labelColor="dark"
               >
-                <p>Kanban</p>
+                <p>cart</p>
               </Sidebar.Item>
-              <Sidebar.Item href="#" icon={HiInbox} label="3">
-                <p>Inbox</p>
-              </Sidebar.Item>
-              <Sidebar.Item href="#" icon={HiUser}>
-                <p>Users</p>
-              </Sidebar.Item>
-              <Sidebar.Item href="#" icon={HiShoppingBag}>
-                <p>Products</p>
-              </Sidebar.Item>
-              <Sidebar.Item href="#" icon={HiArrowSmRight}>
-                <p>Sign In</p>
-              </Sidebar.Item>
-              <Sidebar.Item href="#" icon={HiTable}>
-                <p>Sign Up</p>
+              <Sidebar.Item href="#" icon={HiCurrencyDollar} label="3">
+                <p>Transaction</p>
               </Sidebar.Item>
             </Sidebar.ItemGroup>
           </Sidebar.Items>
         </Sidebar>
       </div>
-      <div></div>
+      <div className="col-start-2 col-end-4">
+        <h1>Cart</h1>
+        <CartList setCartData={setCartData} />
+      </div>
     </div>
   );
 };
