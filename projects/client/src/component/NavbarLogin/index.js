@@ -2,7 +2,7 @@ import { Button, Dropdown, Navbar, Avatar } from "flowbite-react";
 import { useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import { setToken } from "../../features/authSlice";
-import { HiCurrencyDollar, HiLogout } from "react-icons/hi";
+import { HiCurrencyDollar, HiLogout, HiUser } from "react-icons/hi";
 
 const NavbarLogin = () => {
   const dispatch = useDispatch();

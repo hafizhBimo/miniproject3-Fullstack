@@ -2,13 +2,13 @@ import { Sidebar } from "flowbite-react";
 import {
   HiArrowSmRight,
   HiChartPie,
-  HiInbox,
   HiShoppingBag,
   HiTable,
   HiUser,
-  HiViewBoards,
-  HiShoppingCart
+  HiShoppingCart,
+  HiCurrencyDollar,
 } from "react-icons/hi";
+import CartList from "../../component/CartList";
 
 const MyTransaction = () => {
   return (
@@ -28,26 +28,16 @@ const MyTransaction = () => {
               >
                 <p>cart</p>
               </Sidebar.Item>
-              <Sidebar.Item href="#" icon={HiInbox} label="3">
+              <Sidebar.Item href="#" icon={HiCurrencyDollar} label="3">
                 <p>Transaction</p>
-              </Sidebar.Item>
-              <Sidebar.Item href="#" icon={HiUser}>
-                <p>Users</p>
-              </Sidebar.Item>
-              <Sidebar.Item href="#" icon={HiShoppingBag}>
-                <p>Products</p>
-              </Sidebar.Item>
-              <Sidebar.Item href="#" icon={HiArrowSmRight}>
-                <p>Sign In</p>
-              </Sidebar.Item>
-              <Sidebar.Item href="#" icon={HiTable}>
-                <p>Sign Up</p>
               </Sidebar.Item>
             </Sidebar.ItemGroup>
           </Sidebar.Items>
         </Sidebar>
       </div>
-      <div></div>
+      <div>
+        <CartList />
+      </div>
     </div>
   );
 };
