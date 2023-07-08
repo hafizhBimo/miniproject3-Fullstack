@@ -5,6 +5,14 @@ const authMiddleware = require("../middleware/auth");
 
 router.get("/", authProduct.getAllProduct);
 
+router.get("/topSelling",
+    authProduct.topSellingProduct
+);
+
+router.get("/myProduct", 
+authMiddleware.verifyToken,
+authProduct.getMyProduct);
+
 router.get("/:id", authProduct.singlePageProduct);
 
 router.post("/",
@@ -18,6 +26,8 @@ router.patch("/:id",
     multerUpload.single("file"),
     authProduct.ModifyProductListing
 );
+
+
 
 
 

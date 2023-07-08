@@ -32,5 +32,10 @@ router.get("/totalTransaction",
     authTransaction.totalTransaction
 );
 
+router.get("/grossIncome",
+    authMiddleware.verifyToken,
+    authTransaction.grossIncome
+);
+
 
 module.exports = router;
