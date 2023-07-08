@@ -169,6 +169,44 @@ module.exports = {
   }
 },
 
+  async grossIncome(req, res) {
+    const userId = req.user.id;
+
+    const startDate = req.body.startDate
+    const endDate = req.body.endDate
+
+    try {
+
+    const grossIncomeDay = await db.Order_details.findAll({
+      where: {user_id: userId,
+        createdAt: {
+          [db.Sequelize.Op.between]: [startDate, endDate],
+       },
+      },
+      include: [
+        { model: db.Order_items, attributes: ["product_id", "quantity"], as: "Order_items" },
+      ],
+      order: [['createdAt', 'ASC']],
+    });
+
+    const totalOnly = grossIncomeDay.map(
+      (m) => m.total)
+
+    const totalPrice = totalOnly.reduce((total, n) => total + n, 0)
+
+  res.status(201).send({
+      message: "successfully get gross income by day",
+      data: totalPrice,
+  });
+  } catch (error) {
+    res.status(500).send({
+      message: "fatal error on server",
+      error: error.message,
+    });
+  }
+  },
+
+
   async totalTransaction(req, res) {
     const userId = req.user.id;
 
@@ -184,7 +222,10 @@ module.exports = {
        },
       },
       include: [
-        { model: db.Order_items, attributes: ["product_id", "quantity"], as: "Order_items" },
+        { model: db.Order_items, attributes: ["product_id", "quantity"], as: "Order_items",
+        include: [
+          { model: db.Products, attributes: ["name", "price", "imageUrl"], as: "Product" },
+        ], },
       ],
       order: [['createdAt', 'ASC']],
     });
@@ -200,6 +241,5 @@ module.exports = {
     });
   }
   },
-
 
 }

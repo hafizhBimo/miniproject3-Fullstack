@@ -9,6 +9,10 @@ router.get("/topSelling",
     authProduct.topSellingProduct
 );
 
+router.get("/myProduct", 
+authMiddleware.verifyToken,
+authProduct.getMyProduct);
+
 router.get("/:id", authProduct.singlePageProduct);
 
 router.post("/",
