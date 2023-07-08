@@ -3,10 +3,14 @@ import axios from "axios";
 import { Card, Badge } from "flowbite-react";
 import rupiah from "../../utils/currency";
 import { Pagination as FBP } from "flowbite-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import TopProducts from "../../component/TopProduct";
+import "boxicons";
 
 const Product = () => {
+  const navigate = useNavigate();
+  const [cartData, setCartData] = useState([]);
+  const [quantityData, setQuantityData] = useState(1);
   const [userData, setUserData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -58,7 +62,9 @@ const Product = () => {
 
   const handlePage = (page) => {
     axios
-      .get(`http://localhost:8000/api/product?page=${page}&order=${orderValue}&sort=${sortValue}`)
+      .get(
+        `http://localhost:8000/api/product?page=${page}&order=${orderValue}&sort=${sortValue}`
+      )
       .then((response) => {
         setCurrentPage(page);
         setUserData(response.data.data);
@@ -95,6 +101,27 @@ const Product = () => {
   const onPageChange = (page) => {
     if (page != currentPage) {
       handlePage(page);
+    }
+  };
+  const handleClick = (productId) => {
+    const token = localStorage.getItem("token");
+
+    if (token === null) {
+      navigate("/login");
+    } else {
+      axios
+        .post(
+          `http://localhost:8000/api/product/${productId}`,
+          {
+            quantity: quantityData,
+          },
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        )
+        .then((response) => {
+          setCartData(response);
+        });
     }
   };
 
@@ -149,6 +176,23 @@ const Product = () => {
               <span className="text-2xl font-bold text-gray-900 dark:text-white">
                 {rupiah(Product.price)}
               </span>
+            </div>
+            <div>
+              <div className="flex flex-auto gap-3">
+                <button onClick={() => setQuantityData(quantityData - 1)}>
+                  <box-icon name="minus"></box-icon>
+                </button>
+                <div> {quantityData} </div>
+                <button onClick={() => setQuantityData(quantityData + 1)}>
+                  <box-icon name="plus"></box-icon>
+                </button>
+                <button
+                  className="flex text-white bg-indigo-500 border-0 py-1 px-7  focus:outline-none hover:bg-indigo-600 rounded"
+                  onClick={() => handleClick(Product.id)}
+                >
+                  <box-icon name="cart-add"></box-icon>
+                </button>
+              </div>
             </div>
           </Card>
         ))}
