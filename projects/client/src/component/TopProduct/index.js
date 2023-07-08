@@ -45,7 +45,7 @@ const TopProduct = () => {
   return (
     <>
       <div className="border-b-8 flex flex-col space-x-24 m-10 border-solid border-2 border-sky-500 rounded-xl">
-        <div className="overflow-x-scroll z-30 h-30">
+        <div className="carousel p-4 flex items-center justify-start overflow-x-auto scroll-smooth scrollbar-hide">
           <div className=" font-japans text-center py-4 text-xl font-medium">
             Top Product!
           </div>
@@ -67,7 +67,7 @@ const TopProduct = () => {
           </Button.Group>
         </div>
         <div>
-          <div className="flex flex-row overflow-x-scroll z-10 h-30 my-2 mt-1">
+          <div className="flex flex-row overflow-x-scroll scroll-smooth scrollbar-hide ">
             {userData.map((Product) => (
               <div>
                 <Card
