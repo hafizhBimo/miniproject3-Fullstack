@@ -27,6 +27,7 @@ import { setToken } from "./features/authSlice";
 import SinglePageProduct from "./pages/SinglePageProduct";
 import MyStorePage from "./pages/MyTransaction";
 import MyTransaction from "./pages/MyTransaction";
+import MyStore from "./pages/MyStore";
 const Layout = () => {
   return (
     <>
@@ -61,6 +62,7 @@ const router = createBrowserRouter([
         element: <CreateProductListing />,
       },
       { path: "/MyTransaction", element: <MyTransaction /> },
+      { path: "/MyStore", element: <MyStore /> },
     ],
   },
 ]);
