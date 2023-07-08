@@ -185,7 +185,7 @@ module.exports = {
     const grossIncomeDay = await db.Products.findAll({
       where: {sellerId: userId},
       include: [
-        { model: db.Order_items, attributes: ["quantity"], as: "Order_item",
+        { model: db.Order_items, attributes: ["quantity", "createdAt"], as: "Order_item",
         where: {quantity: {[Sequelize.Op.not]: null},
         createdAt: {
           [db.Sequelize.Op.between]: [startDate, endDate],
@@ -203,7 +203,7 @@ module.exports = {
 
   res.status(201).send({
       message: "successfully get gross income by day",
-      data: totalPrice,
+      data: totalPrice, grossIncomeDay
   });
   } catch (error) {
     res.status(500).send({
