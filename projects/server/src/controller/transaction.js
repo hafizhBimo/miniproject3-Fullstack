@@ -199,11 +199,16 @@ module.exports = {
     const totalOnly = grossIncomeDay.map(
       (m) => m.price * m.Order_item.quantity)
 
+    const quantityTotal = grossIncomeDay.map(
+      (q) => q.Order_item.quantity)
+
     const totalPrice = totalOnly.reduce((total, n) => total + n, 0)
+
+    const totalQuantity = quantityTotal.reduce((total, n) => total + n, 0)
 
   res.status(201).send({
       message: "successfully get gross income by day",
-      data: totalPrice, grossIncomeDay
+      data: totalPrice, totalQuantity, grossIncomeDay
   });
   } catch (error) {
     res.status(500).send({
