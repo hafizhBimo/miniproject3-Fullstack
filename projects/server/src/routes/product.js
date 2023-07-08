@@ -27,6 +27,11 @@ router.patch("/:id",
     authProduct.ModifyProductListing
 );
 
+router.patch("/active/:id",
+    authMiddleware.verifyToken,
+    authProduct.modifyProductStatus
+);
+
 
 
 

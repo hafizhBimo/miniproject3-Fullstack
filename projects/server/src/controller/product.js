@@ -98,6 +98,50 @@ module.exports = {
     }
   },
 
+  async modifyProductStatus(req, res) {
+    const userId = req.user.id;
+    const modifyId = req.params.id;
+
+    const status = req.body.status;
+
+    try {
+      const isExist = await db.Products.findOne({
+        where: { id: modifyId },
+      });
+      if (!isExist) {
+        return res.status(404).send({
+          message: "product listing not found",
+        });
+      }
+
+      const productData = await db.Products.findOne({
+        where: {
+          id: modifyId,
+        },
+      });
+
+      if (productData.sellerId !== userId) {
+        return res.status(400).send({
+          message: "cannot deactivate/activate product listing that is not yours",
+        });
+      }
+
+      productData.status = status;
+
+      await productData.save();
+
+      res.status(201).send({
+        message: "modify product status succcessful",
+        data: productData.status,
+      });
+    } catch (error) {
+      res.status(500).send({
+        message: "fatal error on server",
+        error: error.message,
+      });
+    }
+  },
+
   async getAllProduct(req, res) {
     const pagination = {
       page: Number(req.query.page) || 1,
