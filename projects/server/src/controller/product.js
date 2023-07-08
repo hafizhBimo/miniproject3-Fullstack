@@ -206,4 +206,43 @@ module.exports = {
       });
     }
   },
+
+  async topSellingProduct(req, res) {
+
+    const startDate = req.body.startDate
+    const endDate = req.body.endDate
+
+    try {
+
+    const topSelling = await db.Products.findAll({
+      where: {
+        createdAt: {
+          [db.Sequelize.Op.between]: [startDate, endDate],
+       },
+      },
+      include: [
+        { model: db.Category, attributes: ["name"], as: "Category"},
+        { model: db.Order_items, attributes: ["quantity", "order_id"], as: "Order_item",
+          where: {order_id: {[Sequelize.Op.not]: null} }},
+      ],
+    });
+
+    const totalTopSelling = []
+
+
+
+
+
+
+  res.status(201).send({
+      message: "successfully get all top selling products",
+      data: topSelling,
+  });
+  } catch (error) {
+    res.status(500).send({
+      message: "fatal error on server",
+      error: error.message,
+    });
+  }
+  },
 };

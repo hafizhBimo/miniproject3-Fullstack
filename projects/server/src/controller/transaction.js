@@ -134,7 +134,7 @@ module.exports = {
     });
     
     const priceQuantity = totalCart.map(
-      (quantity, price) => quantity.quantity * quantity.Product.price)
+      (quantity) => quantity.quantity * quantity.Product.price)
 
     const totalPrice = priceQuantity.reduce((total, n) => total + n, 0)
 
