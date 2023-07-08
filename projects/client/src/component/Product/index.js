@@ -126,15 +126,16 @@ const Product = () => {
           </select>
         </form>
       </div>
-      <div className="grid grid-cols-4 gap-4 m-6">
+      <div className="grid grid-cols-3 gap-5 m-7">
         {userData.map((Product) => (
           <Card
+            className=" w-100 my-15"
             key={Product.id}
             imgAlt="test"
             imgSrc={`http://localhost:8000${Product.imageUrl}`}
           >
             <div className="">
-              <span class="bg-indigo-100 text-indigo-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">
+              <span className="bg-indigo-100 text-indigo-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">
                 {Product.Category.name}
               </span>
             </div>

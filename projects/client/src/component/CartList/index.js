@@ -2,9 +2,10 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { Table } from "flowbite-react";
 import CartItem from "../CartItem";
-
+import CheckoutModal from "../CheckoutModal";
 const CartList = ({ setCartData }) => {
   const [cartList, setCartList] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     axios.get("http://localhost:8000/api/cart").then((response) => {
@@ -14,6 +15,7 @@ const CartList = ({ setCartData }) => {
   }, []);
   return (
     <div>
+      <h1>Cart</h1>
       {cartList.map((data) => (
         <CartItem
           key={data.id}
@@ -22,6 +24,11 @@ const CartList = ({ setCartData }) => {
           quantity={data.quantity}
         />
       ))}
+      <CheckoutModal
+        showModal={showModal}
+        onClose={() => setShowModal(false)}
+        setShowModal={setShowModal}
+      />
     </div>
   );
 };
