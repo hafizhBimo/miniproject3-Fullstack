@@ -9,6 +9,7 @@ import CartList from "../../component/CartList";
 import TransactionMenu from "../../component/TransactionMenu";
 import { useState } from "react";
 import MyProduct from "../../component/MyProduct";
+import GrossIncome from "../../component/GrossIncome";
 
 const MyStore = () => {
   const [menu, setMenu] = useState(<MyProduct />);
@@ -33,9 +34,9 @@ const MyStore = () => {
                 href="#"
                 icon={HiCurrencyDollar}
                 label="3"
-                onClick={() => setMenu(<MyProduct />)}
+                onClick={() => setMenu(<GrossIncome />)}
               >
-                <p>Transaction</p>
+                <p>Gross Income</p>
               </Sidebar.Item>
             </Sidebar.ItemGroup>
           </Sidebar.Items>
