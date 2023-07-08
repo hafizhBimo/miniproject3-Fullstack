@@ -173,5 +173,37 @@ module.exports = {
   }
 },
 
+  async totalTransaction(req, res) {
+    const userId = req.user.id;
+
+    const startDate = req.body.startDate
+    const endDate = req.body.endDate
+
+    try {
+
+    const totalTransactionDay = await db.Order_details.findAndCountAll({
+      where: {user_id: userId,
+        createdAt: {
+          [db.Sequelize.Op.between]: [startDate, endDate],
+       },
+      },
+      include: [
+        { model: db.Order_items, attributes: ["product_id", "quantity"], as: "Order_items" },
+      ],
+      order: [['createdAt', 'ASC']],
+    });
+
+  res.status(201).send({
+      message: "successfully get all transaction",
+      data: totalTransactionDay,
+  });
+  } catch (error) {
+    res.status(500).send({
+      message: "fatal error on server",
+      error: error.message,
+    });
+  }
+  },
+
 
 }

@@ -27,5 +27,10 @@ router.post("/cart/checkout",
     authTransaction.checkoutOrder
 );
 
+router.get("/totalTransaction",
+    authMiddleware.verifyToken,
+    authTransaction.totalTransaction
+);
+
 
 module.exports = router;
