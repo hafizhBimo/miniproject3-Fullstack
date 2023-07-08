@@ -6,10 +6,8 @@ import { useSelector } from "react-redux";
 import { Button, Checkbox, Label, Modal, TextInput } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
 
-const CheckoutModal = () => {
+const CheckoutModal = ({ showModal, onClose, setShowModal }) => {
   const token = useSelector((state) => state.auth.token);
-  const [openModal, setOpenModal] = useState();
-  const props = { openModal, setOpenModal };
   const [address, setAddress] = useState("");
   const navigate = useNavigate();
 
@@ -22,10 +20,8 @@ const CheckoutModal = () => {
           },
         })
         .then((response) => {
-          console.log(response.data.data, "ini apa ya");
           navigate("/MyTransaction");
-          setOpenModal(undefined);
-          alert(response.data.data)
+          alert(response.data.message);
         });
     } catch (error) {
       return;
@@ -37,14 +33,14 @@ const CheckoutModal = () => {
   };
   return (
     <>
-      <Button onClick={() => props.setOpenModal("form-elements")}>
+      <Button onClick={() => setShowModal("form-elements")}>
         <box-icon name="cart-download"></box-icon> Checkout
       </Button>
       <Modal
-        show={props.openModal === "form-elements"}
+        show={showModal === "form-elements"}
         size="md"
         popup
-        onClose={() => props.setOpenModal(undefined)}
+        onClose={() => onClose()}
       >
         <Modal.Header />
         <Modal.Body>

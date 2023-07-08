@@ -104,9 +104,10 @@ const Product = () => {
           </select>
         </form>
       </div>
-      <div className="grid grid-cols-4 gap-4 m-6">
+      <div className="grid grid-cols-3 gap-5 m-7">
         {userData.map((Product) => (
           <Card
+            className=" w-100 my-15"
             key={Product.id}
             imgAlt="test"
             imgSrc={`http://localhost:8000${Product.imageUrl}`}

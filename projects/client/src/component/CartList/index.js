@@ -5,6 +5,7 @@ import CartItem from "../CartItem";
 import CheckoutModal from "../CheckoutModal";
 const CartList = ({ setCartData }) => {
   const [cartList, setCartList] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     axios.get("http://localhost:8000/api/cart").then((response) => {
@@ -23,7 +24,11 @@ const CartList = ({ setCartData }) => {
           quantity={data.quantity}
         />
       ))}
-      <CheckoutModal />
+      <CheckoutModal
+        showModal={showModal}
+        onClose={() => setShowModal(false)}
+        setShowModal={setShowModal}
+      />
     </div>
   );
 };
