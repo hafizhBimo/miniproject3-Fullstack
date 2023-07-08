@@ -4,7 +4,7 @@ import { Card, Badge } from "flowbite-react";
 import rupiah from "../../utils/currency";
 import { Pagination as FBP } from "flowbite-react";
 import { Link } from "react-router-dom";
-import TopProduct from "../../component/TopProduct";
+import TopProducts from "../../component/TopProduct";
 
 const Product = () => {
   const [userData, setUserData] = useState([]);
@@ -101,7 +101,7 @@ const Product = () => {
   return (
     <>
       <div>
-        {/* <TopProduct /> */}
+        <TopProducts />
         <form>
           <input
             type="text"
