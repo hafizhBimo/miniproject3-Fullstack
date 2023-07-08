@@ -9,6 +9,11 @@ const SinglePageProduct = () => {
   const [userData, setUserData] = useState([]);
   const [cartData, setCartData] = useState([]);
   const [quantityData, setQuantityData] = useState(1);
+
+  if(quantityData < 1){
+    setQuantityData(1)
+  }
+
   const { id } = useParams();
 
   useEffect(() => {

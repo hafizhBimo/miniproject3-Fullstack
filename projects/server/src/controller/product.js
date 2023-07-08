@@ -347,6 +347,7 @@ module.exports = {
       },
       include: [
         { model: db.Category, attributes: ["name"], as: "Category"},
+        { model: db.User, attributes: ["storeName"], as: "User"},
         { model: db.Order_items, attributes: ["quantity", "order_id"], as: "Order_item",
           where: {order_id: {[Sequelize.Op.not]: null} }},
       ],
@@ -354,14 +355,51 @@ module.exports = {
 
     const totalTopSelling = []
 
+    topSelling.forEach(item => {
 
+      var newItem = {
+        id: item.id, 
+        name: item.name, 
+        imageUrl: item.imageUrl,
+        price: item.price,
+        category: item.Category.name,
+        storeName: item.User.storeName,
+        quantity: item.Order_item.quantity,
+      };
+      topSelling.forEach(innerItem => {
+        if(innerItem.id == item.id && 
+          innerItem.Order_item.order_id !== item.Order_item.order_id){
+            newItem.quantity = newItem.quantity + innerItem.Order_item.quantity;
+  
+        }
+      })
+     totalTopSelling.push(newItem);
+   });
 
+   function removeDuplicates(array, property) {
+    return array.filter((item, index, self) => {
+      const value = item[property];
+      return index === self.findIndex((obj) => obj[property] === value);
+    });
+  }
 
+  const uniqueTopSelling = removeDuplicates(totalTopSelling, "id");
 
+  function compare( a, b ) {
+    if ( a.quantity > b.quantity ){
+      return -1;
+    }
+    if ( a.quantity < b.quantity ){
+      return 1;
+    }
+    return 0;
+  }
+  
+  uniqueTopSelling.sort(compare);
 
   res.status(201).send({
       message: "successfully get all top selling products",
-      data: topSelling,
+      data: uniqueTopSelling,
   });
   } catch (error) {
     res.status(500).send({
