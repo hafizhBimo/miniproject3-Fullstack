@@ -27,12 +27,12 @@ router.post("/cart/checkout",
     authTransaction.checkoutOrder
 );
 
-router.get("/totalTransaction",
+router.post("/totalTransaction",
     authMiddleware.verifyToken,
     authTransaction.totalTransaction
 );
 
-router.get("/grossIncome",
+router.post("/grossIncome",
     authMiddleware.verifyToken,
     authTransaction.grossIncome
 );
