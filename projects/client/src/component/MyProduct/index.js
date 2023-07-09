@@ -114,7 +114,7 @@ const MyProduct = () => {
         if (Product.id === productId) {
           return {
             ...Product,
-            active: !Product.active, // Toggle the `active` property
+            status: !Product.status, // Toggle the `active` property
           };
         }
         return Product;
@@ -123,9 +123,9 @@ const MyProduct = () => {
       setUserData(updatedUserData);
   
       // Make an API call to update the product's status
-      await axios.put(
-        `http://localhost:8000/api/product/${productId}`,
-        { status: updatedUserData.find((Product) => Product.id === productId).active ? "active" : "deactive" },
+      await axios.patch(
+        `http://localhost:8000/api/product/active/${productId}`,
+        { status: updatedUserData.find((Product) => Product.id === productId).status ? false : true },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -133,7 +133,7 @@ const MyProduct = () => {
         }
       );
     } catch (error) {
-      console.error("Error toggling product active status:", error);
+      console.error("Error toggling product status:", error);
     }
   };
   
