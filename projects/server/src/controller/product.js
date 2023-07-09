@@ -335,17 +335,42 @@ module.exports = {
 
   async topSellingProduct(req, res) {
 
-    const startDate = req.body.startDate
-    const endDate = req.body.endDate
+    const pagination = {
+      page: Number(req.query.page) || 1,
+      perPage: Number(req.query.perPage) || 9,
+      search: req.query.search || undefined,
+      sortBy: req.query.sort || "createdAt",
+      sortOrder: req.query.order || "desc",
+      categoryId: req.query.categoryId || undefined,
+      name: req.query.name || undefined,
+    };
+
+    let where = {};
+
+      if (pagination.search) {
+        where[db.Sequelize.Op.or] = [
+          {
+            "$user.username$": {
+              [db.Sequelize.Op.like]: `%${pagination.search}%`,
+            },
+          },
+          { name: { [db.Sequelize.Op.like]: `%${pagination.search}%` } },
+          { description: { [db.Sequelize.Op.like]: `%${pagination.search}%` } },
+        ];
+      }
+
+      if (pagination.categoryId) {
+        where.categoryId = pagination.categoryId;
+      }
+
+      if (pagination.name) {
+        where.name = { [db.Sequelize.Op.like]: `%${pagination.name}%` };
+      }
 
     try {
 
     const topSelling = await db.Products.findAll({
-      where: {
-        createdAt: {
-          [db.Sequelize.Op.between]: [startDate, endDate],
-       },
-      },
+      where,
       include: [
         { model: db.Category, attributes: ["name"], as: "Category"},
         { model: db.User, attributes: ["storeName"], as: "User"},

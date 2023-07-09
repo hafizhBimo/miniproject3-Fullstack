@@ -105,27 +105,27 @@ const Product = () => {
       handlePage(page);
     }
   };
-  const handleClick = (productId) => {
-    const token = localStorage.getItem("token");
+  // const handleClick = (productId) => {
+  //   const token = localStorage.getItem("token");
 
-    if (token === null) {
-      navigate("/login");
-    } else {
-      axios
-        .post(
-          `http://localhost:8000/api/product/${productId}`,
-          {
-            quantity: quantityData,
-          },
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        )
-        .then((response) => {
-          setCartData(response);
-        });
-    }
-  };
+  //   if (token === null) {
+  //     navigate("/login");
+  //   } else {
+  //     axios
+  //       .post(
+  //         `http://localhost:8000/api/product/${productId}`,
+  //         {
+  //           quantity: quantityData,
+  //         },
+  //         {
+  //           headers: { Authorization: `Bearer ${token}` },
+  //         }
+  //       )
+  //       .then((response) => {
+  //         setCartData(response);
+  //       });
+  //   }
+  // };
 
   return (
     <>
@@ -159,7 +159,7 @@ const Product = () => {
         {userData.map((Product) => (
         <Link to={`/Product/${Product.id}`} >
           <Card
-            className=" w-100 my-15 transform hover:scale-110 transition duration-500'"
+            className=" w-100 my-15 transform hover:scale-110 transition duration-500"
             key={Product.id}
             imgAlt="test"
             imgSrc={`http://localhost:8000${Product.imageUrl}`}
