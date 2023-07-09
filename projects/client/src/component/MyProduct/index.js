@@ -107,6 +107,37 @@ const MyProduct = () => {
     }
   };
 
+  // active deactive
+  const handleToggleActive = async (productId) => {
+    try {
+      const updatedUserData = userData.map((Product) => {
+        if (Product.id === productId) {
+          return {
+            ...Product,
+            status: !Product.status, // Toggle the `active` property
+          };
+        }
+        return Product;
+      });
+  
+      setUserData(updatedUserData);
+  
+      // Make an API call to update the product's status
+      await axios.patch(
+        `http://localhost:8000/api/product/active/${productId}`,
+        { status: updatedUserData.find((Product) => Product.id === productId).status ? false : true },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    } catch (error) {
+      console.error("Error toggling product status:", error);
+    }
+  };
+  
+
   return (
     <>
       <div>
@@ -143,6 +174,18 @@ const MyProduct = () => {
             imgAlt="test"
             imgSrc={`http://localhost:8000${Product.imageUrl}`}
           >
+            <label className="relative inline-flex items-center cursor-pointer">
+              <input
+                type="checkbox"
+                className="sr-only peer"
+                checked={Product.active}
+                onChange={() => handleToggleActive(Product.id)}
+              />
+              <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border-gray-600 after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
+              <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">
+                {Product.active ? "Active" : "Deactive"} toggle
+              </span>
+            </label>
             <div className="">
               <span className="bg-indigo-100 text-indigo-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">
                 {Product.Category.name}
@@ -160,6 +203,7 @@ const MyProduct = () => {
               </span>
             </div>
           </Card>
+          
         ))}
       </div>
       <div className="flex items-center justify-center text-center">
