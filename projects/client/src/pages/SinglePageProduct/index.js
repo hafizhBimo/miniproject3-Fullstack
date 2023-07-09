@@ -36,7 +36,6 @@ const SinglePageProduct = () => {
       return <button
       disabled={disabled}
       className="flex text-white bg-gray-500 border-0 py-1 px-7  focus:outline-none rounded"
-      onClick={onClick}
     >
       <box-icon name="cart-add"></box-icon>
     </button>;
@@ -44,8 +43,8 @@ const SinglePageProduct = () => {
     return <button
     disabled={disabled}
     className="flex text-white bg-indigo-500 border-0 py-1 px-7  focus:outline-none hover:bg-indigo-600 rounded"
-    onClick={onClick}
-  >
+    onClick= {onClick}
+    >
     <box-icon name="cart-add"></box-icon>
   </button>;
   }
@@ -56,7 +55,6 @@ const SinglePageProduct = () => {
     axios
       .get(`http://localhost:8000/api/product/${id}`)
       .then((response) => {
-        console.log("WING", response);
         setUserData([response.data.data]);
       })
       .catch((err) => console.log(err));
@@ -137,7 +135,7 @@ const SinglePageProduct = () => {
                     </button>
                     <CartButton
                     disabled = {isDisabled}
-                    onClick = {handleClick}
+                    onClick = {() => handleClick(Product.id)}
                     />
                   </div>
                 </div>
