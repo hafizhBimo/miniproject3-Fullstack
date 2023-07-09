@@ -157,8 +157,9 @@ const Product = () => {
       </div>
       <div className="grid grid-cols-3 gap-5 m-7">
         {userData.map((Product) => (
+        <Link to={`/Product/${Product.id}`} >
           <Card
-            className=" w-100 my-15"
+            className=" w-100 my-15 transform hover:scale-110 transition duration-500'"
             key={Product.id}
             imgAlt="test"
             imgSrc={`http://localhost:8000${Product.imageUrl}`}
@@ -168,35 +169,19 @@ const Product = () => {
                 {Product.Category.name}
               </span>
             </div>
-            <Link to={`/Product/${Product.id}`}>
+            
               <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
                 <p>{Product.name}</p>
               </h5>
-            </Link>
+            
             <h6>{Product.User.storeName}</h6>
             <div className="flex items-center justify-between">
               <span className="text-2xl font-bold text-gray-900 dark:text-white">
                 {rupiah(Product.price)}
               </span>
             </div>
-            <div>
-              <div className="flex flex-auto gap-3">
-                <button onClick={() => setQuantityData(quantityData - 1)}>
-                  <box-icon name="minus"></box-icon>
-                </button>
-                <div> {quantityData} </div>
-                <button onClick={() => setQuantityData(quantityData + 1)}>
-                  <box-icon name="plus"></box-icon>
-                </button>
-                <button
-                  className="flex text-white bg-indigo-500 border-0 py-1 px-7  focus:outline-none hover:bg-indigo-600 rounded"
-                  onClick={() => handleClick(Product.id)}
-                >
-                  <box-icon name="cart-add"></box-icon>
-                </button>
-              </div>
-            </div>
           </Card>
+          </Link>
         ))}
       </div>
       <div className="flex items-center justify-center text-center">
