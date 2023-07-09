@@ -14,7 +14,7 @@ const TopProduct = () => {
     const fetchData = async () => {
       try {
         const response1 = await axios.get(
-          `http://localhost:8000/api/product?search=&order=&categoryId=&sort=&page=`
+          `http://localhost:8000/api/product/topSelling?search&order&categoryId=&sort&page`
         );
 
         setUserData(response1.data.data);
@@ -34,9 +34,8 @@ const TopProduct = () => {
 
   const handleFilterClick = (id) => {
     axios
-      .get(`http://localhost:8000/api/product?categoryId=${id}`)
+      .get(`http://localhost:8000/api/product/topSelling?categoryId=${id}`)
       .then((response) => {
-        console.log(response.data);
         setUserData(response.data.data);
       })
       .catch((err) => console.log(err));
@@ -70,29 +69,33 @@ const TopProduct = () => {
           <div className="flex flex-row overflow-x-scroll scroll-smooth scrollbar-hide ">
             {userData.map((Product) => (
               <div>
+                <Link to={`/Product/${Product.id}`}>
                 <Card
                   style={{ width: "250px" }}
                   key={Product.id}
                   imgAlt="test"
+                  className=""
                   imgSrc={`http://localhost:8000${Product.imageUrl}`}
                 >
                   <div className="">
                     <span class="bg-indigo-100 text-indigo-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">
-                      {Product.Category.name}
+                      {Product.category}
                     </span>
                   </div>
-                  <Link to={`/Product/${Product.id}`}>
+                  
                     <h5 className="text-l font-semibold tracking-tight text-gray-900 dark:text-white">
                       <p>{Product.name}</p>
                     </h5>
-                  </Link>
-                  <h6>{Product.User.storeName}</h6>
+                  
+                  <h6>{Product.storeName}</h6>
+                  <h6>{Product.quantity} sold!</h6>
                   <div className="flex items-center justify-between">
                     <span className="text-2xl font-bold text-gray-900 dark:text-white">
                       {rupiah(Product.price)}
                     </span>
                   </div>
                 </Card>
+                </Link>
               </div>
             ))}
           </div>
