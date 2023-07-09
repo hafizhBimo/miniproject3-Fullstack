@@ -8,12 +8,48 @@ const SinglePageProduct = () => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState([]);
   const [cartData, setCartData] = useState([]);
-  const [quantityData, setQuantityData] = useState(1);
+  const [quantityData, setQuantityData] = useState(0);
+  const [isDisabled, setDisabled] = useState(true);
 
-  if(quantityData < 1){
-    setQuantityData(1)
+  if(quantityData < 0){
+    setQuantityData(0);
   }
 
+  function handleQuantityPlus(){
+    setQuantityData(quantityData + 1)
+  }
+
+  function handleQuantityMinus(){
+    setQuantityData(quantityData - 1)
+  }
+
+  useEffect(() => {
+    if (quantityData <= 0) {
+      setDisabled(true);
+    } else {
+      setDisabled(false);
+    }
+  }, [quantityData]);
+
+  function CartButton({ disabled, onClick }) {
+    if (disabled) {
+      return <button
+      disabled={disabled}
+      className="flex text-white bg-gray-500 border-0 py-1 px-7  focus:outline-none rounded"
+      onClick={onClick}
+    >
+      <box-icon name="cart-add"></box-icon>
+    </button>;
+    }
+    return <button
+    disabled={disabled}
+    className="flex text-white bg-indigo-500 border-0 py-1 px-7  focus:outline-none hover:bg-indigo-600 rounded"
+    onClick={onClick}
+  >
+    <box-icon name="cart-add"></box-icon>
+  </button>;
+  }
+  
   const { id } = useParams();
 
   useEffect(() => {
@@ -92,19 +128,17 @@ const SinglePageProduct = () => {
                 </div>
                 <div>
                   <div className="flex flex-auto gap-3">
-                    <button onClick={() => setQuantityData(quantityData - 1)}>
+                    <button onClick={handleQuantityMinus}>
                       <box-icon name="minus"></box-icon>
                     </button>
                     <div> {quantityData} </div>
-                    <button onClick={() => setQuantityData(quantityData + 1)}>
+                    <button onClick={handleQuantityPlus}>
                       <box-icon name="plus"></box-icon>
                     </button>
-                    <button
-                      className="flex text-white bg-indigo-500 border-0 py-1 px-7  focus:outline-none hover:bg-indigo-600 rounded"
-                      onClick={() => handleClick(Product.id)}
-                    >
-                      <box-icon name="cart-add"></box-icon>
-                    </button>
+                    <CartButton
+                    disabled = {isDisabled}
+                    onClick = {handleClick}
+                    />
                   </div>
                 </div>
               </div>
