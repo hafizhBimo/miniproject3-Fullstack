@@ -180,6 +180,7 @@ module.exports = {
         where,
         include: [
           { model: db.User, attributes: ["username"], as: "User" },
+          { model: db.User, attributes: ["storeName"], as: "User" },
           { model: db.Category, attributes: ["name"], as: "Category" },
         ],
         order: [[pagination.sortBy, pagination.sortOrder]],
