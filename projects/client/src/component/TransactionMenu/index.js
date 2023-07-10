@@ -3,27 +3,22 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import TransactionItem from "../TransactionItem";
-import Calendar from 'react-calendar'
-import 'react-calendar/dist/Calendar.css';
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
 
 const TransactionMenu = () => {
   const token = useSelector((state) => state.auth.token);
   const [transactionList, setTransactionList] = useState([]);
-  
+
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
 
-const [input, setInput] = useState({
-    startDate: startDate,
-      endDate: endDate,
-  });
   const [modalOpen1, setModalOpen1] = useState(false);
   const [modalOpen2, setModalOpen2] = useState(false);
 
   const handleToggleModal1 = () => {
     setModalOpen1(!modalOpen1);
   };
-
 
   const handleCloseModal1 = () => {
     setModalOpen1(false);
@@ -32,7 +27,6 @@ const [input, setInput] = useState({
   const handleToggleModal2 = () => {
     setModalOpen2(!modalOpen2);
   };
-
 
   const handleCloseModal2 = () => {
     setModalOpen2(false);
@@ -46,7 +40,6 @@ const [input, setInput] = useState({
     setEndDate(date);
   }
   const handleSubmit = (value) => {
-    console.log(input, "ini input");
     try {
       axios
         .post(`http://localhost:8000/api/totalTransaction`, value, {
@@ -55,7 +48,6 @@ const [input, setInput] = useState({
           },
         })
         .then((response) => {
-          
           setTransactionList(response.data.data.rows);
         })
         .catch((error) => {
@@ -67,37 +59,25 @@ const [input, setInput] = useState({
   };
   return (
     <div className=" mr-8">
-      <Button onClick={handleToggleModal1}>
-          choose start date
-      </Button>
+      <Button onClick={handleToggleModal1}>choose start date</Button>
       {startDate.toDateString()}
-      <Modal
-        onClose={handleCloseModal1}
-        popup
-        show = {modalOpen1}
-        size="md"
-      >
+      <Modal onClose={handleCloseModal1} popup show={modalOpen1} size="md">
         <Modal.Header />
-          <Modal.Body>
-            <Calendar onChange={onChange1} value={startDate} />
-          </Modal.Body>
+        <Modal.Body>
+          <Calendar onChange={onChange1} value={startDate} />
+        </Modal.Body>
       </Modal>
-          <Button onClick={handleToggleModal2}>
-              choose end date
-          </Button>
-          {endDate.toDateString()}
-      <Modal
-          onClose={handleCloseModal2}
-          popup
-          show = {modalOpen2}
-          size="md"
-       >
+      <Button onClick={handleToggleModal2}>choose end date</Button>
+      {endDate.toDateString()}
+      <Modal onClose={handleCloseModal2} popup show={modalOpen2} size="md">
         <Modal.Header />
-            <Modal.Body>
-            <Calendar onChange={onChange2} value={endDate} />
-          </Modal.Body>
+        <Modal.Body>
+          <Calendar onChange={onChange2} value={endDate} />
+        </Modal.Body>
       </Modal>
-      <Button onClick={() => handleSubmit(input)}>confirm</Button>
+      <Button onClick={() => handleSubmit({ startDate, endDate })}>
+        confirm
+      </Button>
       <h1>Transaction List</h1>
       <TransactionItem transactionList={transactionList} />
     </div>
