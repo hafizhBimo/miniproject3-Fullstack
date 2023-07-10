@@ -59,8 +59,8 @@ const LoginPage = () => {
         </span>
       </Alert>) : isError
       }
-      <div className="items-center justify-center  my-32 border flex">
-        <div style={{paddingBottom: "350px", paddingRight: "10px"}}>
+      <div className="flex items-center justify-center  my-32 ml-96 mr-96 border rounded border-sky-500  pt-16 pb-16" >
+        <div style={{paddingBottom: "350px", paddingRight: "30px"}}>
 
         <button className="  hover:scale-150 hover:rounded-md hover:bg-red-500">
           <box-icon name="x" onClick={navigateToHome}></box-icon>
