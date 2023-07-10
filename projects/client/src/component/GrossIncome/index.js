@@ -30,6 +30,7 @@ const GrossIncome = () => {
         })
         .then((response) => {
           setData(response.data);
+          console.log(response.data);
         });
     } catch (error) {
       return;
@@ -62,36 +63,20 @@ const GrossIncome = () => {
               className="metric-card bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg p-4 max-w-72 w-full"
               style={{ cursor: "auto" }}
             >
-              <a
-                aria-label="Unsplash Downloads"
-                target="_blank"
-                rel="noopener noreferrer"
-                href="https://stackdiary.com/"
+              <div
+                className="flex items-center text-gray-900 dark:text-gray-100"
+                style={{ cursor: "auto" }}
               >
-                <div
-                  className="flex items-center text-gray-900 dark:text-gray-100"
-                  style={{ cursor: "auto" }}
-                >
-                  Gross Income
-                  <svg
-                    className="h-4 w-4 ml-1"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    style={{ cursor: "auto" }}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                    />
-                  </svg>
-                </div>
-              </a>
+                Gross Income
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                />
+              </div>
               <p
-                className="mt-2 text-3xl font-bold spacing-sm text-black dark:text-white"
+                className="mt-2 text-2xl font-bold spacing-sm text-black dark:text-white"
                 style={{ cursor: "auto" }}
               >
                 {data.data ? rupiah(data.data) : rupiah(0)}
@@ -102,38 +87,46 @@ const GrossIncome = () => {
               className="metric-card bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg p-4 max-w-72 w-full"
               style={{ cursor: "auto" }}
             >
-              <a
-                aria-label="Unsplash Views"
-                target="_blank"
-                rel="noopener noreferrer"
-                href="https://stackdiary.com/"
+              <div
+                className="flex items-center text-gray-900 dark:text-gray-100"
+                style={{ cursor: "auto" }}
               >
-                <div
-                  className="flex items-center text-gray-900 dark:text-gray-100"
-                  style={{ cursor: "auto" }}
-                >
-                  total Quantity
-                  <svg
-                    className="h-4 w-4 ml-1"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                    />
-                  </svg>
-                </div>
-              </a>
+                total Quantity
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                />
+              </div>
               <p
-                className="mt-2 text-3xl font-bold spacing-sm text-black dark:text-white"
+                className="mt-2 text-2xl font-bold spacing-sm text-black dark:text-white"
                 style={{ cursor: "auto" }}
               >
                 {data.totalQuantity ? data.totalQuantity : 0} pcs
+              </p>
+            </div>
+            <div
+              className="metric-card bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg p-4 max-w-72 w-full"
+              style={{ cursor: "auto" }}
+            >
+              <div
+                className="flex items-center text-gray-900 dark:text-gray-100"
+                style={{ cursor: "auto" }}
+              >
+                items sold
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                />
+              </div>
+              <p
+                className="mt-2 text-2xl font-bold spacing-sm text-black dark:text-white"
+                style={{ cursor: "auto" }}
+              >
+                {data.uniqueItemsSold} item
               </p>
             </div>
           </div>

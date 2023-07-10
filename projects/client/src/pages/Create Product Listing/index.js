@@ -16,7 +16,9 @@ const CreateProductListing = () => {
   const [value, setValue] = useState("");
   const [categoryData, setCategoryData] = useState([]);
 
-  const [selectedItem, setSelectedItem] = useState('1');
+  const [selectedItem, setSelectedItem] = useState("1");
+
+ 
 
   const navigate = useNavigate();
 
@@ -74,8 +76,11 @@ const CreateProductListing = () => {
       onSubmit={handleSubmit}
     >
       {(props) => (
-        <form className="flex flex-col gap-4 items-center" onSubmit={props.handleSubmit}>
-          <div className="flex flex-col" style={{width:"600px"}}>
+        <form
+          className="flex flex-col gap-4 items-center"
+          onSubmit={props.handleSubmit}
+        >
+          <div className="flex flex-col" style={{ width: "600px" }}>
             <div className="mb-2 block">
               <Label htmlFor="name" value="Product Name" />
               <TextInput
