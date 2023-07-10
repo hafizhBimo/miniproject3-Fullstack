@@ -44,13 +44,12 @@ const FormCheckout = ({ onSubmit }) => {
 
 const CheckoutModal = ({ showModal, onClose, setShowModal }) => {
   const token = useSelector((state) => state.auth.token);
-  const [address, setAddress] = useState("");
   const navigate = useNavigate();
 
-  const handleClick = ({ address }) => {
+  const handleClick = (values) => {
     try {
       axios
-        .post("http://localhost:8000/api/cart/checkout", address, {
+        .post("http://localhost:8000/api/cart/checkout", values, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
