@@ -134,9 +134,7 @@ const RegisterPage = () => {
             <ErrorMessage name="confirmPassword" component="div" />
           </div>
 
-          <Button type="submit">
-            Submit
-          </Button>
+          <Button type="submit">Submit</Button>
         </form>
       )}
     </Formik>
