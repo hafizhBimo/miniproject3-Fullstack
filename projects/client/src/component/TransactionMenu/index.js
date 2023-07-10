@@ -2,15 +2,27 @@ import { Table, TextInput, Label, Button } from "flowbite-react";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import TransactionItem from "../TransactionItem";
 
 const TransactionMenu = () => {
   const token = useSelector((state) => state.auth.token);
   const [transactionList, setTransactionList] = useState([]);
-  const [input, setInput] = useState("");
-  const handleChange = (event) => {
-    setInput(event.target.value);
+  const [input, setInput] = useState({
+    startDate: "",
+    endDate: "",
+  });
+  const handleChange = (event, type) => {
+    const value = event.target.value;
+    if (type == "startDate") {
+      setInput({ ...input, startDate: value });
+      console.log(event.target.value);
+    } else {
+      setInput({ ...input, endDate: value });
+      console.log(event.target.value);
+    }
   };
-  const handleSubmit = (value, action) => {
+  const handleSubmit = (value) => {
+    console.log(input, "ini input");
     try {
       axios
         .post(`http://localhost:8000/api/totalTransaction`, value, {
@@ -19,7 +31,8 @@ const TransactionMenu = () => {
           },
         })
         .then((response) => {
-          setTransactionList(response.data.data);
+          
+          setTransactionList(response.data.data.rows);
         })
         .catch((error) => {
           alert(error.response.data.message);
@@ -35,73 +48,20 @@ const TransactionMenu = () => {
         id="startDate1"
         placeholder="yyyy-mm-dd"
         type="text"
-        value={input}
-        onChange={handleChange}
+        value={input.startDate}
+        onChange={(event) => handleChange(event, "startDate")}
       />
-      <Label htmlFor="endtDate1" value="End Date" />
-      <TextInput id="endtDate1" placeholder="yyyy-mm-dd" type="text" />
-      <Button onClick={()=>handleSubmit()}>confirm</Button>
-      <Table>
-        <Table.Head>
-          <Table.HeadCell>Product name</Table.HeadCell>
-          <Table.HeadCell>Color</Table.HeadCell>
-          <Table.HeadCell>Category</Table.HeadCell>
-          <Table.HeadCell>Price</Table.HeadCell>
-          <Table.HeadCell>
-            <span className="sr-only">Edit</span>
-          </Table.HeadCell>
-        </Table.Head>
-        <Table.Body className="divide-y">
-          <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-            <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-              Apple MacBook Pro 17"
-            </Table.Cell>
-            <Table.Cell>Sliver</Table.Cell>
-            <Table.Cell>Laptop</Table.Cell>
-            <Table.Cell>$2999</Table.Cell>
-            <Table.Cell>
-              <a
-                className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
-                href="/tables"
-              >
-                <p>Edit</p>
-              </a>
-            </Table.Cell>
-          </Table.Row>
-          <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-            <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-              <p>Microsoft Surface Pro</p>
-            </Table.Cell>
-            <Table.Cell>White</Table.Cell>
-            <Table.Cell>Laptop PC</Table.Cell>
-            <Table.Cell>$1999</Table.Cell>
-            <Table.Cell>
-              <a
-                className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
-                href="/tables"
-              >
-                <p>Edit</p>
-              </a>
-            </Table.Cell>
-          </Table.Row>
-          <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-            <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-              Magic Mouse 2
-            </Table.Cell>
-            <Table.Cell>Black</Table.Cell>
-            <Table.Cell>Accessories</Table.Cell>
-            <Table.Cell>$99</Table.Cell>
-            <Table.Cell>
-              <a
-                className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
-                href="/tables"
-              >
-                <p>Edit</p>
-              </a>
-            </Table.Cell>
-          </Table.Row>
-        </Table.Body>
-      </Table>
+      <Label htmlFor="endDate1" value="End Date" />
+      <TextInput
+        id="endDate1"
+        placeholder="yyyy-mm-dd"
+        type="text"
+        value={input.endDate}
+        onChange={(event) => handleChange(event, "endDate")}
+      />
+      <Button onClick={() => handleSubmit(input)}>confirm</Button>
+      <h1>Transaction List</h1>
+      <TransactionItem transactionList={transactionList} />
     </div>
   );
 };
