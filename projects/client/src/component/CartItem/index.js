@@ -1,6 +1,13 @@
-const CartItem = ({product_id, user_id, quantity}) => {
+const CartItem = ({
+  product_id,
+  user_id,
+  quantity,
+  productName,
+  productImg,
+  productStore,
+}) => {
   return (
-    <div className="container mx-auto my-4 px-20">
+    <div className="mx-auto my-1 px-40">
       <div
         className="flex bg-white border border-gray-300 rounded-xl overflow-hidden items-center justify-start"
         style={{ cursor: "auto" }}
@@ -11,14 +18,14 @@ const CartItem = ({product_id, user_id, quantity}) => {
               alt="Placeholder Photo"
               className="absolute left-0 top-0 w-full h-full object-cover object-center transition duration-50"
               loading="lazy"
-              src="https://stackdiary.com/140x100.png"
+              src={`http://localhost:8000${productImg}`}
             />
           </div>
         </div>
         <div className="p-4">
-          <p className="text-sm line-clamp-1">{product_id}</p>
+          <p className="text-sm line-clamp-1">{productName}</p>
           <p className="text-sm text-gray-500 mt-1 line-clamp-2">
-            {user_id}
+            {productStore}
           </p>
           <span className="flex items-center justify-start text-gray-500">
             <svg
