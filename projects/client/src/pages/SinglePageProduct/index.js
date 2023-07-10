@@ -3,6 +3,7 @@ import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import rupiah from "../../utils/currency";
 import "boxicons";
+import { Alert } from "flowbite-react";
 
 const SinglePageProduct = () => {
   const navigate = useNavigate();
@@ -10,6 +11,7 @@ const SinglePageProduct = () => {
   const [cartData, setCartData] = useState([]);
   const [quantityData, setQuantityData] = useState(0);
   const [isDisabled, setDisabled] = useState(true);
+  const [isSuccess, setSuccess] = useState("");
 
   if(quantityData < 0){
     setQuantityData(0);
@@ -78,12 +80,26 @@ const SinglePageProduct = () => {
         )
         .then((response) => {
           setCartData(response);
+          setSuccess("item added to cart")
         });
     }
   };
 
   return (
     <div>
+      {isSuccess? (<Alert
+        color="success"
+        onDismiss={()=>setSuccess("")}
+      >
+        <span>
+          <p>
+            <span className="font-medium">
+              Item added to cart
+            </span>
+          </p>
+        </span>
+      </Alert>) : isSuccess
+      }
       {userData.map((Product) => (
         <div style={{ backgroundColor: "rgba(0, 0, 0, 0)" }}>
           <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
