@@ -94,7 +94,8 @@ const GrossIncome = () => {
                 className="mt-2 text-3xl font-bold spacing-sm text-black dark:text-white"
                 style={{ cursor: "auto" }}
               >
-                {rupiah(data.data)}
+                {data.data ? rupiah(data.data) : rupiah(0)}
+
               </p>
             </div>
             <div
@@ -132,7 +133,7 @@ const GrossIncome = () => {
                 className="mt-2 text-3xl font-bold spacing-sm text-black dark:text-white"
                 style={{ cursor: "auto" }}
               >
-                {data.totalQuantity} each
+                {data.totalQuantity ? data.totalQuantity : 0} pcs
               </p>
             </div>
           </div>
