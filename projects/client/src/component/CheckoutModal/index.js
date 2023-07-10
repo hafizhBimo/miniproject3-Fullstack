@@ -6,12 +6,48 @@ import { useSelector } from "react-redux";
 import { Button, Checkbox, Label, Modal, TextInput } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
 
+const FormCheckout = ({ onSubmit }) => {
+  const [address, setAddress] = useState("");
+
+  return (
+    <>
+      <div className="space-y-6">
+        <h3 className="text-xl font-medium text-gray-900 dark:text-white">
+          please input your delivery address
+        </h3>
+        <div>
+          <div className="mb-2 block">
+            <Label htmlFor="address" value="address" />
+          </div>
+          <input
+            key="textinput1"
+            id="address"
+            placeholder="ex. Jl. cilandak KKO raya no.xx RTxx/RWxx, Pasar Minggu"
+            type="text"
+            onChange={(e) => {
+              setAddress(e.target.value);
+            }}
+            value={address}
+          />
+        </div>
+      </div>
+      <Button
+        onClick={() => {
+          onSubmit({ address });
+        }}
+      >
+        confirm
+      </Button>
+    </>
+  );
+};
+
 const CheckoutModal = ({ showModal, onClose, setShowModal }) => {
   const token = useSelector((state) => state.auth.token);
   const [address, setAddress] = useState("");
   const navigate = useNavigate();
 
-  const handleClick = () => {
+  const handleClick = ({ address }) => {
     try {
       axios
         .post("http://localhost:8000/api/cart/checkout", address, {
@@ -28,9 +64,6 @@ const CheckoutModal = ({ showModal, onClose, setShowModal }) => {
     }
   };
 
-  const handleChange = (event) => {
-    setAddress(event.target.value);
-  };
   return (
     <>
       <Button onClick={() => setShowModal("form-elements")}>
@@ -44,24 +77,7 @@ const CheckoutModal = ({ showModal, onClose, setShowModal }) => {
       >
         <Modal.Header />
         <Modal.Body>
-          <div className="space-y-6">
-            <h3 className="text-xl font-medium text-gray-900 dark:text-white">
-              please input your delivery address
-            </h3>
-            <div>
-              <div className="mb-2 block">
-                <Label htmlFor="address" value="address" />
-              </div>
-              <TextInput
-                id="address"
-                placeholder="ex. Jl. cilandak KKO raya no.xx RTxx/RWxx, Pasar Minggu"
-                type="text"
-                onChange={handleChange}
-                value={address}
-              />
-            </div>
-          </div>
-          <Button onClick={() => handleClick()}>confirm</Button>
+          <FormCheckout onSubmit={handleClick} />
         </Modal.Body>
       </Modal>
     </>

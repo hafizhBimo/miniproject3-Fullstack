@@ -6,7 +6,7 @@ import CheckoutModal from "../CheckoutModal";
 const CartList = ({ setCartData }) => {
   const [cartList, setCartList] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const token = localStorage.getItem("token")
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     axios
@@ -32,6 +32,7 @@ const CartList = ({ setCartData }) => {
         />
       ))}
       <CheckoutModal
+        key={"checkoutmodal1"}
         showModal={showModal}
         onClose={() => setShowModal(false)}
         setShowModal={setShowModal}
