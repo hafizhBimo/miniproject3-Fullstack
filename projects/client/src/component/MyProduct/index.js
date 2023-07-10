@@ -22,7 +22,7 @@ const MyProduct = () => {
 
   // categories
   const [categories, setCategories] = useState([]);
-  const token = useSelector((state) => state.auth.token);
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -120,7 +120,9 @@ const MyProduct = () => {
           <select value={category} onChange={handleCategoryChange}>
             <option value={""}>All</option>
             {categories.map((category) => (
-              <option key={category.id} value={category.id}>{category.name}</option>
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
             ))}
           </select>
           <select value={orderValue} onChange={handleOrderChange}>
