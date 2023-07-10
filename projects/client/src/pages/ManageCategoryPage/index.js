@@ -4,6 +4,8 @@ import AddCategoryButton from "../../component/AddCategoryButton";
 import ModifyCategory from "../../component/ModifyCategory";
 import "./style.css";
 
+import withAuth from "../../component/withAuth";
+
 const ManageCategoryPage = () => {
   const [categoryData, setCategoryData] = useState([]);
   useEffect(() => {
@@ -31,4 +33,4 @@ const ManageCategoryPage = () => {
   );
 };
 
-export default ManageCategoryPage;
+export default withAuth(ManageCategoryPage);

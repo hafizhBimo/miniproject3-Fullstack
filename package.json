@@ -19,5 +19,8 @@
   },
   "workspaces": [
     "projects/*"
-  ]
+  ],
+  "dependencies": {
+    "express-validator": "^7.0.1"
+  }
 }

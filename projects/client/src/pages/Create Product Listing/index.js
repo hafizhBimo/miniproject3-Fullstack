@@ -10,6 +10,7 @@ import {
   Dropdown,
 } from "flowbite-react";
 import { Link, useNavigate } from "react-router-dom";
+import withAuth from "../../component/withAuth";
 
 const CreateProductListing = () => {
   const [value, setValue] = useState("");
@@ -152,4 +153,4 @@ const CreateProductListing = () => {
   );
 };
 
-export default CreateProductListing;
+export default withAuth(CreateProductListing);

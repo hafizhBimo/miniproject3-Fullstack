@@ -10,6 +10,7 @@ import TransactionMenu from "../../component/TransactionMenu";
 import { useState } from "react";
 import MyProduct from "../../component/MyProduct";
 import GrossIncome from "../../component/GrossIncome";
+import withAuth from "../../component/withAuth";
 
 const MyStore = () => {
   const [menu, setMenu] = useState(<MyProduct />);
@@ -43,4 +44,4 @@ const MyStore = () => {
   );
 };
 
-export default MyStore;
+export default withAuth(MyStore);

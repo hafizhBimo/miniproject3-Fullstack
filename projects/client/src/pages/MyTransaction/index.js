@@ -11,6 +11,7 @@ import {
 } from "react-icons/hi";
 import CartList from "../../component/CartList";
 import TransactionMenu from "../../component/TransactionMenu";
+import withAuth from "../../component/withAuth";
 
 const MyTransaction = () => {
   const [cartData, setCartData] = useState(0);
@@ -53,4 +54,4 @@ const MyTransaction = () => {
   );
 };
 
-export default MyTransaction;
+export default withAuth(MyTransaction);
