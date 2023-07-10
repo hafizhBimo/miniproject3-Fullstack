@@ -26,118 +26,161 @@ const RegisterPage = () => {
     }
     navigate("/Login");
   };
+  const navigateToLogin = () => {
+    navigate("/Login");
+  };
   return (
-    <Formik
-      initialValues={{
-        username: "",
-        email: "",
-        password: "",
-        phoneNumber: "",
-        storeName: "",
-        password: "",
-        confirmPassword: "",
-      }}
-      validationSchema={createSchema}
-      onSubmit={handleSubmit}
-    >
-      {(props) => (
-        <form
-          className="flex max-w-md flex-col gap-4"
-          onSubmit={props.handleSubmit}
+    <>
+      <div className="items-center justify-center  flex">
+        <div style={{ paddingBottom: "700px", paddingRight: "20px" }}>
+          <button className="  hover:scale-150 hover:rounded hover:bg-sky-400  my-4">
+            <box-icon name="arrow-back" onClick={navigateToLogin}></box-icon>
+          </button>
+        </div>
+        <Formik
+          initialValues={{
+            username: "",
+            email: "",
+            password: "",
+            phoneNumber: "",
+            storeName: "",
+            password: "",
+            confirmPassword: "",
+          }}
+          validationSchema={createSchema}
+          onSubmit={handleSubmit}
         >
-          <div>
-            <div className="mb-2 block">
-              <Label htmlFor="username" value="Your username" />
-            </div>
-            <TextInput
-              className="input-wrapper"
-              id="username"
-              name="username"
-              required
-              type="text"
-              onChange={props.handleChange}
-              value={props.values.username}
-            />
-          </div>
-          <div>
-            <div className="mb-2 block">
-              <Label htmlFor="email" value="Your email" />
-            </div>
-            <TextInput
-              className="input-wrapper"
-              id="email"
-              name="email"
-              placeholder="name@flowbite.com"
-              required
-              type="email"
-              onChange={props.handleChange}
-              value={props.values.email}
-            />
-          </div>
-          <div>
-            <div className="mb-2 block">
-              <Label htmlFor="phoneNumber" value="Your phone number" />
-            </div>
-            <TextInput
-              className="input-wrapper"
-              id="phoneNumber"
-              name="phoneNumber"
-              required
-              type="text"
-              onChange={props.handleChange}
-              value={props.values.phoneNumber}
-            />
-          </div>
-          <div>
-            <div className="mb-2 block">
-              <Label htmlFor="storeName" value="your store name" />
-            </div>
-            <TextInput
-              className="input-wrapper"
-              id="storeName"
-              name="storeName"
-              required
-              type="text"
-              onChange={props.handleChange}
-              value={props.values.storeName}
-            />
-            <ErrorMessage name="storeName" component="div" />
-          </div>
-          <div>
-            <div className="mb-2 block">
-              <Label htmlFor="password" value="Your password" />
-            </div>
-            <TextInput
-              className="input-wrapper"
-              id="password"
-              name="password"
-              required
-              type="password"
-              onChange={props.handleChange}
-              value={props.values.password}
-            />
-            <ErrorMessage name="confirmPassword" component="div" />
-          </div>
-          <div>
-            <div className="mb-2 block">
-              <Label htmlFor="confirmPassword" value="confirm password" />
-            </div>
-            <TextInput
-              className="input-wrapper"
-              id="confirmPassword"
-              name="confirmPassword"
-              required
-              type="password"
-              onChange={props.handleChange}
-              value={props.values.confirmPassword}
-            />
-            <ErrorMessage name="confirmPassword" component="div" />
-          </div>
+          {(props) => (
+            <form
+              className="flex  max-w-2xl flex-col gap-3 leading-10 "
+              style={{ width: "350px" }}
+              onSubmit={props.handleSubmit}
+            >
+              <div>
+                <div className="mb-2 block">
+                  <Label
+                    style={{ fontSize: "18px" }}
+                    htmlFor="username"
+                    value="Your username"
+                  />
+                </div>
+                <TextInput
+                  style={{ lineHeight: "40px" }}
+                  className="input-wrapper"
+                  id="username"
+                  name="username"
+                  required
+                  type="text"
+                  onChange={props.handleChange}
+                  value={props.values.username}
+                />
+              </div>
+              <div>
+                <div className="mb-2 block">
+                  <Label
+                    style={{ fontSize: "18px" }}
+                    htmlFor="email"
+                    value="Your email"
+                  />
+                </div>
+                <TextInput
+                  style={{ lineHeight: "40px" }}
+                  className="input-wrapper"
+                  id="email"
+                  name="email"
+                  placeholder="name@flowbite.com"
+                  required
+                  type="email"
+                  onChange={props.handleChange}
+                  value={props.values.email}
+                />
+              </div>
+              <div>
+                <div className="mb-2 block">
+                  <Label
+                    style={{ fontSize: "18px" }}
+                    htmlFor="phoneNumber"
+                    value="Your phone number"
+                  />
+                </div>
+                <TextInput
+                  style={{ lineHeight: "40px" }}
+                  className="input-wrapper"
+                  id="phoneNumber"
+                  name="phoneNumber"
+                  required
+                  type="text"
+                  onChange={props.handleChange}
+                  value={props.values.phoneNumber}
+                />
+              </div>
+              <div>
+                <div className="mb-2 block">
+                  <Label
+                    style={{ fontSize: "18px" }}
+                    htmlFor="storeName"
+                    value="your store name"
+                  />
+                </div>
+                <TextInput
+                  style={{ lineHeight: "40px" }}
+                  className="input-wrapper"
+                  id="storeName"
+                  name="storeName"
+                  required
+                  type="text"
+                  onChange={props.handleChange}
+                  value={props.values.storeName}
+                />
+                <ErrorMessage name="storeName" component="div" />
+              </div>
+              <div>
+                <div className="mb-2 block">
+                  <Label
+                    style={{ fontSize: "18px" }}
+                    htmlFor="password"
+                    value="Your password"
+                  />
+                </div>
+                <TextInput
+                  style={{ lineHeight: "40px" }}
+                  className="input-wrapper"
+                  id="password"
+                  name="password"
+                  required
+                  type="password"
+                  onChange={props.handleChange}
+                  value={props.values.password}
+                />
+                <ErrorMessage name="confirmPassword" component="div" />
+              </div>
+              <div>
+                <div className="mb-2 block">
+                  <Label
+                    style={{ fontSize: "18px" }}
+                    htmlFor="confirmPassword"
+                    value="confirm password"
+                  />
+                </div>
+                <TextInput
+                  style={{ lineHeight: "40px" }}
+                  className="input-wrapper"
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  required
+                  type="password"
+                  onChange={props.handleChange}
+                  value={props.values.confirmPassword}
+                />
+                <ErrorMessage name="confirmPassword" component="div" />
+              </div>
 
-          <Button type="submit">Submit</Button>
-        </form>
-      )}
-    </Formik>
+              <Button type="submit">Submit</Button>
+            </form>
+          )}
+        </Formik>
+      </div>
+    </>
   );
 };
 

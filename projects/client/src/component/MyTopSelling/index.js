@@ -3,18 +3,14 @@ import axios from "axios";
 import { Card, Badge } from "flowbite-react";
 import rupiah from "../../utils/currency";
 import { Pagination as FBP } from "flowbite-react";
-import { Link, useNavigate } from "react-router-dom";
-import TopProducts from "../../component/TopProduct";
-import "boxicons";
+import { Link } from "react-router-dom";
+import TopProduct from "../../component/TopProduct";
+import { useSelector } from "react-redux";
 
-const Product = () => {
-  const navigate = useNavigate();
-  const [cartData, setCartData] = useState([]);
-  const [quantityData, setQuantityData] = useState(1);
+const MyTopSelling = () => {
   const [userData, setUserData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [currentHover, setCurrentHover] = useState(0);
 
   // Search
   const [term, setTerm] = useState("");
@@ -26,17 +22,22 @@ const Product = () => {
 
   // categories
   const [categories, setCategories] = useState([]);
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response1 = await axios.get(
-          `http://localhost:8000/api/product?search=&order=&categoryId=&sort=&page=`
+          `http://localhost:8000/api/product/myProduct/topSelling`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
 
         setUserData(response1.data.data);
         setTotalPages(Math.ceil(response1.data.pagination.totalData / 9));
-        console.log(response1.data, "ini data");
         const response2 = await axios.get(
           "http://localhost:8000/api/categories"
         );
@@ -65,7 +66,7 @@ const Product = () => {
   const handlePage = (page) => {
     axios
       .get(
-        `http://localhost:8000/api/product?page=${page}&order=${orderValue}&sort=${sortValue}`
+        `http://localhost:8000/api/product/myProduct/topSelling?page=${page}&order=${orderValue}&sort=${sortValue}`
       )
       .then((response) => {
         setCurrentPage(page);
@@ -92,11 +93,10 @@ const Product = () => {
 
     axios
       .get(
-        `http://localhost:8000/api/product?search=${term}&order=${orderValue}&categoryId=${category}&sort=${sortValue}`
+        `http://localhost:8000/api/product/myProduct/topSelling?search=${term}&order=${orderValue}&categoryId=${category}&sort=${sortValue}`
       )
       .then((response) => {
         setUserData(response.data.data);
-        console.log(response.data, "ini product");
       })
       .catch((err) => console.log(err));
   };
@@ -106,32 +106,11 @@ const Product = () => {
       handlePage(page);
     }
   };
-  // const handleClick = (productId) => {
-  //   const token = localStorage.getItem("token");
-
-  //   if (token === null) {
-  //     navigate("/login");
-  //   } else {
-  //     axios
-  //       .post(
-  //         `http://localhost:8000/api/product/${productId}`,
-  //         {
-  //           quantity: quantityData,
-  //         },
-  //         {
-  //           headers: { Authorization: `Bearer ${token}` },
-  //         }
-  //       )
-  //       .then((response) => {
-  //         setCartData(response);
-  //       });
-  //   }
-  // };
 
   return (
     <>
       <div>
-        <TopProducts />
+        {/* <TopProduct /> */}
         <form>
           <input
             type="text"
@@ -160,45 +139,32 @@ const Product = () => {
       </div>
       <div className="grid grid-cols-3 gap-5 m-7">
         {userData.map((Product) => (
-          <Link key={Product.id} to={`/Product/${Product.id}`}>
-            <Card
-              className=" w-100 my-15 transform hover:scale-110 transition duration-500"
-              key={Product.id}
-              imgAlt="test"
-              imgSrc={`http://localhost:8000${Product.imageUrl}`}
-            >
-              <div className="">
-                <span className="bg-indigo-100 text-indigo-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">
-                  {Product.Category.name}
-                </span>
-              </div>
-
+          <Card
+            className=" w-100 my-15"
+            key={Product.id}
+            imgAlt="test"
+            imgSrc={`http://localhost:8000${Product.imageUrl}`}
+          >
+            <div className="">
+              <span className="bg-indigo-100 text-indigo-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">
+                {Product.category}
+              </span>
+            </div>
+            <Link to={`/Product/${Product.id}`}>
               <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
                 <p>{Product.name}</p>
               </h5>
-
-              <h6>{Product.User.storeName}</h6>
-              <div
-                onMouseEnter={() => {
-                  setCurrentHover(Product.id);
-                }}
-                onMouseLeave={() => {
-                  setCurrentHover(0);
-                }}
-              >
-                {currentHover === Product.id ? (
-                  <h6>{Product.User.username}</h6>
-                ) : (
-                  <h6>{Product.User.storeName}</h6>
-                )}
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-2xl font-bold text-gray-900 dark:text-white">
-                  {rupiah(Product.price)}
-                </span>
-              </div>
-            </Card>
-          </Link>
+            </Link>
+            <h6>{Product.storeName}</h6>
+            <div className="flex items-center justify-between">
+              <span className="text-2xl font-bold text-gray-900 dark:text-white">
+                {rupiah(Product.price)}
+              </span>
+            </div>
+            <h6>{Product.quantity} sold</h6>
+            
+          </Card>
+          
         ))}
       </div>
       <div className="flex items-center justify-center text-center">
@@ -216,4 +182,4 @@ const Product = () => {
   );
 };
 
-export default Product;
+export default MyTopSelling;
