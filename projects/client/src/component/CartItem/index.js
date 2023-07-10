@@ -1,6 +1,32 @@
-const CartItem = ({product_id, user_id, quantity}) => {
+import axios from "axios";
+import "boxicons";
+import { useSelector } from "react-redux";
+
+const CartItem = ({
+  quantity,
+  productName,
+  productImg,
+  productStore,
+  product_id,
+  cartId,
+}) => {
+  const token = useSelector((state) => state.auth.token);
+  const handleClick = (id) => {
+    try {
+      axios
+        .patch(`http://localhost:8000/api/cart/${id}`, null, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((response) => {
+          alert(response.data.message);
+          window.location.reload();
+        });
+    } catch (error) {
+      return;
+    }
+  };
   return (
-    <div className="container mx-auto my-4 px-20">
+    <div className="mx-auto my-1 px-40">
       <div
         className="flex bg-white border border-gray-300 rounded-xl overflow-hidden items-center justify-start"
         style={{ cursor: "auto" }}
@@ -11,14 +37,14 @@ const CartItem = ({product_id, user_id, quantity}) => {
               alt="Placeholder Photo"
               className="absolute left-0 top-0 w-full h-full object-cover object-center transition duration-50"
               loading="lazy"
-              src="https://stackdiary.com/140x100.png"
+              src={`http://localhost:8000${productImg}`}
             />
           </div>
         </div>
         <div className="p-4">
-          <p className="text-sm line-clamp-1">{product_id}</p>
+          <p className="text-sm line-clamp-1">{productName}</p>
           <p className="text-sm text-gray-500 mt-1 line-clamp-2">
-            {user_id}
+            {productStore}
           </p>
           <span className="flex items-center justify-start text-gray-500">
             <svg
@@ -35,6 +61,12 @@ const CartItem = ({product_id, user_id, quantity}) => {
             </svg>
             quantity:{quantity}
           </span>
+          <button
+            className="hover:scale-110"
+            onClick={() => handleClick(cartId)}
+          >
+            <box-icon name="trash"></box-icon>
+          </button>
         </div>
       </div>
     </div>

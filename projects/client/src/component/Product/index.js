@@ -140,7 +140,7 @@ const Product = () => {
           <select value={category} onChange={handleCategoryChange}>
             <option value={""}>All</option>
             {categories.map((category) => (
-              <option value={category.id}>{category.name}</option>
+              <option key={category.id} value={category.id}>{category.name}</option>
             ))}
           </select>
           <select value={orderValue} onChange={handleOrderChange}>
@@ -157,7 +157,7 @@ const Product = () => {
       </div>
       <div className="grid grid-cols-3 gap-5 m-7">
         {userData.map((Product) => (
-        <Link to={`/Product/${Product.id}`} >
+        <Link key={Product.id} to={`/Product/${Product.id}`} >
           <Card
             className=" w-100 my-15 transform hover:scale-110 transition duration-500"
             key={Product.id}
