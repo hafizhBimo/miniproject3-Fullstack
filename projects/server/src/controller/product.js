@@ -440,4 +440,111 @@ module.exports = {
     });
   }
   },
+
+  async myTopSellingProduct(req, res) {
+
+    const userId = req.user.id;
+
+    const pagination = {
+      page: Number(req.query.page) || 1,
+      perPage: Number(req.query.perPage) || 9,
+      search: req.query.search || undefined,
+      sortBy: req.query.sort || "createdAt",
+      sortOrder: req.query.order || "desc",
+      categoryId: req.query.categoryId || undefined,
+      name: req.query.name || undefined,
+    };
+
+    let where = {};
+
+      if (pagination.search) {
+        where[db.Sequelize.Op.or] = [
+          {
+            "$user.username$": {
+              [db.Sequelize.Op.like]: `%${pagination.search}%`,
+            },
+          },
+          { name: { [db.Sequelize.Op.like]: `%${pagination.search}%` } },
+          { description: { [db.Sequelize.Op.like]: `%${pagination.search}%` } },
+        ];
+      }
+
+      if (pagination.categoryId) {
+        where.categoryId = pagination.categoryId;
+      }
+
+      if (pagination.name) {
+        where.name = { [db.Sequelize.Op.like]: `%${pagination.name}%` };
+      }
+
+      where.status = true;
+      where.sellerId = userId;
+
+    try {
+
+    const topSelling = await db.Products.findAll({
+      where,
+      include: [
+        { model: db.Category, attributes: ["name"], as: "Category"},
+        { model: db.User, attributes: ["storeName"], as: "User"},
+        { model: db.Order_items, attributes: ["quantity", "order_id"], as: "Order_item",
+          where: {order_id: {[Sequelize.Op.not]: null} }},
+      ],
+    });
+
+    const totalTopSelling = []
+
+    topSelling.forEach(item => {
+
+      var newItem = {
+        id: item.id, 
+        name: item.name, 
+        imageUrl: item.imageUrl,
+        price: item.price,
+        category: item.Category.name,
+        storeName: item.User.storeName,
+        quantity: item.Order_item.quantity,
+      };
+      topSelling.forEach(innerItem => {
+        if(innerItem.id == item.id && 
+          innerItem.Order_item.order_id !== item.Order_item.order_id){
+            newItem.quantity = newItem.quantity + innerItem.Order_item.quantity;
+  
+        }
+      })
+     totalTopSelling.push(newItem);
+   });
+
+   function removeDuplicates(array, property) {
+    return array.filter((item, index, self) => {
+      const value = item[property];
+      return index === self.findIndex((obj) => obj[property] === value);
+    });
+  }
+
+  const uniqueTopSelling = removeDuplicates(totalTopSelling, "id");
+
+  function compare( a, b ) {
+    if ( a.quantity > b.quantity ){
+      return -1;
+    }
+    if ( a.quantity < b.quantity ){
+      return 1;
+    }
+    return 0;
+  }
+  
+  uniqueTopSelling.sort(compare);
+
+  res.status(201).send({
+      message: "successfully get all top selling products",
+      data: uniqueTopSelling,
+  });
+  } catch (error) {
+    res.status(500).send({
+      message: "fatal error on server",
+      error: error.message,
+    });
+  }
+  },
 };
