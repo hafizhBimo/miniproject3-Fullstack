@@ -1,11 +1,30 @@
+import axios from "axios";
+import "boxicons";
+import { useSelector } from "react-redux";
+
 const CartItem = ({
-  product_id,
-  user_id,
   quantity,
   productName,
   productImg,
   productStore,
+  product_id,
+  cartId,
 }) => {
+  const token = useSelector((state) => state.auth.token);
+  const handleClick = (id) => {
+    try {
+      axios
+        .patch(`http://localhost:8000/api/cart/${id}`, null, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((response) => {
+          alert(response.data.message);
+          window.location.reload();
+        });
+    } catch (error) {
+      return;
+    }
+  };
   return (
     <div className="mx-auto my-1 px-40">
       <div
@@ -42,6 +61,12 @@ const CartItem = ({
             </svg>
             quantity:{quantity}
           </span>
+          <button
+            className="hover:scale-110"
+            onClick={() => handleClick(cartId)}
+          >
+            <box-icon name="trash"></box-icon>
+          </button>
         </div>
       </div>
     </div>

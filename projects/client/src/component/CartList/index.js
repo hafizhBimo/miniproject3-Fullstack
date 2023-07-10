@@ -35,6 +35,7 @@ const CartList = ({ setCartData }) => {
           productName={data.Product.name}
           productImg={data.Product.imageUrl}
           productStore={data.User.storeName}
+          cartId={data.id}
         />
       ))}
       <div className=" flex place-content-center">
