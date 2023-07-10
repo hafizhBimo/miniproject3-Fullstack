@@ -12,16 +12,21 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const ModifyCategory = ({ categoryData }) => {
+  const token = localStorage.getItem("token");
   const [categoryName, setCategoryName] = useState({
     old: "categories",
     new: "",
   });
   const handleEdit = () => {
     try {
-      axios.patch("http://localhost:8000/api/modify-category", {
-        oldCategory: categoryName.old,
-        newCategory: categoryName.new,
-      });
+      axios.patch(
+        "http://localhost:8000/api/modify-category",
+        {
+          oldCategory: categoryName.old,
+          newCategory: categoryName.new,
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
     } catch (error) {
       return;
     }
@@ -51,7 +56,9 @@ const ModifyCategory = ({ categoryData }) => {
         type="text"
         placeholder="ex. Arcade, Shooter, Card, etc."
         value={categoryName.new}
-        onChange={(e)=>setCategoryName({...categoryName,new:e.target.value})}
+        onChange={(e) =>
+          setCategoryName({ ...categoryName, new: e.target.value })
+        }
       />
       <Button onClick={() => handleEdit()}>edit</Button>
     </div>

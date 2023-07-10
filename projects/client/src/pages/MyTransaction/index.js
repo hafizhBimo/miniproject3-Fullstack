@@ -23,9 +23,6 @@ const MyTransaction = () => {
         <Sidebar aria-label="Default sidebar example">
           <Sidebar.Items>
             <Sidebar.ItemGroup>
-              <Sidebar.Item href="#" icon={HiChartPie}>
-                <p>Dashboard</p>
-              </Sidebar.Item>
               <Sidebar.Item
                 href="#"
                 icon={HiShoppingCart}
@@ -38,7 +35,7 @@ const MyTransaction = () => {
               <Sidebar.Item
                 href="#"
                 icon={HiCurrencyDollar}
-                label="3"
+                
                 onClick={() => setMenu(<TransactionMenu />)}
               >
                 <p>Transaction</p>
@@ -47,9 +44,7 @@ const MyTransaction = () => {
           </Sidebar.Items>
         </Sidebar>
       </div>
-      <div className="col-start-2 col-end-4">
-        {menu}
-      </div>
+      <div className="col-start-2 col-end-4">{menu}</div>
     </div>
   );
 };

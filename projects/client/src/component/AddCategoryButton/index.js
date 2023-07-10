@@ -9,14 +9,17 @@ import {
 import { Formik } from "formik";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import "./style.css"
+import "./style.css";
 
 const AddCategoryButton = () => {
+  const token = localStorage.getItem("token");
   const navigate = useNavigate();
   const handleSubmit = (value, action) => {
     try {
       axios
-        .post(`http://localhost:8000/api/new-category`, value)
+        .post(`http://localhost:8000/api/new-category`, value, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
         .then((response) => {
           alert(response.data.message);
         })
