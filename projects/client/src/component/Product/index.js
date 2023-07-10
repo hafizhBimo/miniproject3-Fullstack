@@ -14,8 +14,7 @@ const Product = () => {
   const [userData, setUserData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  
-  
+  const [currentHover, setCurrentHover] = useState(0);
 
   // Search
   const [term, setTerm] = useState("");
@@ -157,30 +156,42 @@ const Product = () => {
       </div>
       <div className="grid grid-cols-3 gap-5 m-7">
         {userData.map((Product) => (
-        <Link to={`/Product/${Product.id}`} >
-          <Card
-            className=" w-100 my-15 transform hover:scale-110 transition duration-500"
-            key={Product.id}
-            imgAlt="test"
-            imgSrc={`http://localhost:8000${Product.imageUrl}`}
-          >
-            <div className="">
-              <span className="bg-indigo-100 text-indigo-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">
-                {Product.Category.name}
-              </span>
-            </div>
-            
+          <Link to={`/Product/${Product.id}`}>
+            <Card
+              className=" w-100 my-15 transform hover:scale-110 transition duration-500"
+              key={Product.id}
+              imgAlt="test"
+              imgSrc={`http://localhost:8000${Product.imageUrl}`}
+              
+            >
+              <div className="">
+                <span className="bg-indigo-100 text-indigo-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">
+                  {Product.Category.name}
+                </span>
+              </div>
+
               <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
                 <p>{Product.name}</p>
               </h5>
-            
-            <h6>{Product.User.storeName}</h6>
-            <div className="flex items-center justify-between">
-              <span className="text-2xl font-bold text-gray-900 dark:text-white">
-                {rupiah(Product.price)}
-              </span>
-            </div>
-          </Card>
+              <div onMouseEnter={() => {
+                setCurrentHover(Product.id);
+              }}
+              onMouseLeave={()=>{
+                  setCurrentHover(0);
+              }}>
+
+              {currentHover === Product.id ? (
+                <h6>{Product.User.username}</h6>
+                ) : (
+                  <h6>{Product.User.storeName}</h6>
+                  )}
+                  </div>
+              <div className="flex items-center justify-between">
+                <span className="text-2xl font-bold text-gray-900 dark:text-white">
+                  {rupiah(Product.price)}
+                </span>
+              </div>
+            </Card>
           </Link>
         ))}
       </div>
