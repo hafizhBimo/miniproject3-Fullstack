@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Card, Badge } from "flowbite-react";
+import { Card, Badge, Button } from "flowbite-react";
 import rupiah from "../../utils/currency";
 import { Pagination as FBP } from "flowbite-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import TopProduct from "../../component/TopProduct";
 import { useSelector } from "react-redux";
 
@@ -23,6 +23,8 @@ const MyProduct = () => {
   // categories
   const [categories, setCategories] = useState([]);
   const token = localStorage.getItem("token");
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -190,6 +192,13 @@ const MyProduct = () => {
                 {Product.status ? "Active" : "Deactivated"} product
               </span>
             </label>
+            <Button
+              onClick={() => {
+                navigate(`/ModifyProductListing/${Product.id}`);
+              }}
+            >
+              Edit Product
+            </Button>
             <div className="">
               <span className="bg-indigo-100 text-indigo-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">
                 {Product.Category.name}

@@ -11,6 +11,7 @@ import {
 } from "flowbite-react";
 import { Link, useNavigate } from "react-router-dom";
 import withAuth from "../../component/withAuth";
+import rupiah from "../../utils/currency";
 
 const ModifyProductListing = () => {
   const getLastItem = (thePath) =>
@@ -20,16 +21,21 @@ const ModifyProductListing = () => {
 
   const [value, setValue] = useState("");
   const [categoryData, setCategoryData] = useState([]);
-  const [selectedItem, setSelectedItem] = useState('1');
+  const [selectedItem, setSelectedItem] = useState("1");
+  const [productData, setProductData] = useState({});
 
   const navigate = useNavigate();
 
   const token = localStorage.getItem("token");
 
   useEffect(() => {
-    axios("http://localhost:8000/api/categories")
-      .then((response) => {
-        setCategoryData(response.data.list);
+    axios("http://localhost:8000/api/categories").then((response) => {
+      setCategoryData(response.data.list);
+    });
+    axios(`http://localhost:8000/api/product/${currurl}`)
+      .then((response2) => {
+        setProductData(response2.data.data);
+        console.log(response2.data.data, "ini prodak");
       })
       .catch((err) => console.log(err));
   }, []);
@@ -85,18 +91,20 @@ const ModifyProductListing = () => {
               <TextInput
                 id="name"
                 type="text"
-                placeholder="name of product"
+                placeholder={productData.name}
                 name="name"
                 onChange={props.handleChange}
                 value={props.values.name}
+                required
               />
               <Label htmlFor="price" value="change price" />
               <TextInput
                 type="text"
-                placeholder="price of product"
+                placeholder={rupiah(productData.price)}
                 name="price"
                 onChange={props.handleChange}
                 value={props.values.price}
+                required
               />
 
               <div id="textarea">
@@ -107,11 +115,12 @@ const ModifyProductListing = () => {
                   />
                   <Textarea
                     type="text"
-                    placeholder="description of product"
+                    placeholder={productData.description}
                     name="description"
                     onChange={(event) => {
                       props.setFieldValue("description", event.target.value);
                     }}
+                    required
                   />
                 </div>
               </div>
