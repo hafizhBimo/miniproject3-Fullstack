@@ -206,9 +206,20 @@ module.exports = {
 
     const totalQuantity = quantityTotal.reduce((total, n) => total + n, 0)
 
+    function removeDuplicates(array, property) {
+      return array.filter((item, index, self) => {
+        const value = item[property];
+        return index === self.findIndex((obj) => obj[property] === value);
+      });
+    }
+  
+    const uniqueGrossIncome = removeDuplicates(grossIncomeDay, "id");
+
+    const uniqueItemsSold = uniqueGrossIncome.length
+
   res.status(201).send({
       message: "successfully get gross income by day",
-      data: totalPrice, totalQuantity, grossIncomeDay
+      data: totalPrice, totalQuantity, uniqueItemsSold, grossIncomeDay
   });
   } catch (error) {
     res.status(500).send({

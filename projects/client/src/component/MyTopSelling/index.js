@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import TopProduct from "../../component/TopProduct";
 import { useSelector } from "react-redux";
 
-const MyProduct = () => {
+const MyTopSelling = () => {
   const [userData, setUserData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -28,7 +28,7 @@ const MyProduct = () => {
     const fetchData = async () => {
       try {
         const response1 = await axios.get(
-          `http://localhost:8000/api/product/myProduct`,
+          `http://localhost:8000/api/product/myProduct/topSelling`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -66,7 +66,7 @@ const MyProduct = () => {
   const handlePage = (page) => {
     axios
       .get(
-        `http://localhost:8000/api/product?page=${page}&order=${orderValue}&sort=${sortValue}`
+        `http://localhost:8000/api/product/myProduct/topSelling?page=${page}&order=${orderValue}&sort=${sortValue}`
       )
       .then((response) => {
         setCurrentPage(page);
@@ -93,7 +93,7 @@ const MyProduct = () => {
 
     axios
       .get(
-        `http://localhost:8000/api/product?search=${term}&order=${orderValue}&categoryId=${category}&sort=${sortValue}`
+        `http://localhost:8000/api/product/myProduct/topSelling?search=${term}&order=${orderValue}&categoryId=${category}&sort=${sortValue}`
       )
       .then((response) => {
         setUserData(response.data.data);
@@ -106,37 +106,6 @@ const MyProduct = () => {
       handlePage(page);
     }
   };
-
-  // active deactive
-  const handleToggleActive = async (productId) => {
-    try {
-      const updatedUserData = userData.map((Product) => {
-        if (Product.id === productId) {
-          return {
-            ...Product,
-            status: !Product.status, // Toggle the `active` property
-          };
-        }
-        return Product;
-      });
-  
-      setUserData(updatedUserData);
-  
-      // Make an API call to update the product's status
-      await axios.patch(
-        `http://localhost:8000/api/product/active/${productId}`,
-        { status: updatedUserData.find((Product) => Product.id === productId).status ? false : true },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-    } catch (error) {
-      console.error("Error toggling product status:", error);
-    }
-  };
-  
 
   return (
     <>
@@ -176,21 +145,9 @@ const MyProduct = () => {
             imgAlt="test"
             imgSrc={`http://localhost:8000${Product.imageUrl}`}
           >
-            <label className="relative inline-flex items-center cursor-pointer">
-              <input
-                type="checkbox"
-                className="sr-only peer"
-                checked={Product.status}
-                onChange={() => handleToggleActive(Product.id)}
-              />
-              <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border-gray-600 after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
-              <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">
-                {Product.status ? "Active" : "Deactivated"} product
-              </span>
-            </label>
             <div className="">
               <span className="bg-indigo-100 text-indigo-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">
-                {Product.Category.name}
+                {Product.category}
               </span>
             </div>
             <Link to={`/Product/${Product.id}`}>
@@ -198,12 +155,13 @@ const MyProduct = () => {
                 <p>{Product.name}</p>
               </h5>
             </Link>
-            <h6>{Product.User.username}</h6>
+            <h6>{Product.storeName}</h6>
             <div className="flex items-center justify-between">
               <span className="text-2xl font-bold text-gray-900 dark:text-white">
                 {rupiah(Product.price)}
               </span>
             </div>
+            <h6>{Product.quantity} sold</h6>
             
           </Card>
           
@@ -224,4 +182,4 @@ const MyProduct = () => {
   );
 };
 
-export default MyProduct;
+export default MyTopSelling;

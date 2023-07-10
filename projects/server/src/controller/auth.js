@@ -81,7 +81,6 @@ module.exports = {
           });
         }
 
-
         const payload = { id: user.id };
         const token = jwt.sign(payload, secretKey, {
           expiresIn: "1h",

@@ -10,6 +10,7 @@ import {
   Dropdown,
 } from "flowbite-react";
 import { Link, useNavigate } from "react-router-dom";
+import withAuth from "../../component/withAuth";
 
 const ModifyProductListing = () => {
   const getLastItem = (thePath) =>
@@ -156,4 +157,4 @@ const ModifyProductListing = () => {
   );
 };
 
-export default ModifyProductListing;
+export default withAuth(ModifyProductListing);

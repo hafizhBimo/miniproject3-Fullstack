@@ -13,6 +13,10 @@ router.get("/myProduct",
 authMiddleware.verifyToken,
 authProduct.getMyProduct);
 
+router.get("/myProduct/topSelling", 
+authMiddleware.verifyToken,
+authProduct.myTopSellingProduct);
+
 router.get("/:id", authProduct.singlePageProduct);
 
 router.post("/",

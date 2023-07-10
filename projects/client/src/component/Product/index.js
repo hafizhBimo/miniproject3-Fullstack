@@ -139,7 +139,7 @@ const Product = () => {
           <select value={category} onChange={handleCategoryChange}>
             <option value={""}>All</option>
             {categories.map((category) => (
-              <option value={category.id}>{category.name}</option>
+              <option key={category.id} value={category.id}>{category.name}</option>
             ))}
           </select>
           <select value={orderValue} onChange={handleOrderChange}>
@@ -156,20 +156,19 @@ const Product = () => {
       </div>
       <div className="grid grid-cols-3 gap-5 m-7">
         {userData.map((Product) => (
-          <Link to={`/Product/${Product.id}`}>
-            <Card
-              className=" w-100 my-15 transform hover:scale-110 transition duration-500"
-              key={Product.id}
-              imgAlt="test"
-              imgSrc={`http://localhost:8000${Product.imageUrl}`}
-              
-            >
-              <div className="">
-                <span className="bg-indigo-100 text-indigo-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">
-                  {Product.Category.name}
-                </span>
-              </div>
-
+        <Link key={Product.id} to={`/Product/${Product.id}`} >
+          <Card
+            className=" w-100 my-15 transform hover:scale-110 transition duration-500"
+            key={Product.id}
+            imgAlt="test"
+            imgSrc={`http://localhost:8000${Product.imageUrl}`}
+          >
+            <div className="">
+              <span className="bg-indigo-100 text-indigo-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">
+                {Product.Category.name}
+              </span>
+            </div>
+            
               <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
                 <p>{Product.name}</p>
               </h5>
