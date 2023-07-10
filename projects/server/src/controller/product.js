@@ -13,6 +13,7 @@ module.exports = {
     const sellerId = req.user.id;
     console.log(req.user);
     const { name, description, price, categoryId } = req.body;
+    const status = true
 
     const imageUrl = setFromFileNameToDBValue(req.file.filename);
     try {
@@ -23,6 +24,7 @@ module.exports = {
         sellerId,
         imageUrl,
         categoryId,
+        status
       });
       res.status(201).send({
         message: "product listing successful",
@@ -175,6 +177,8 @@ module.exports = {
       if (pagination.name) {
         where.name = { [db.Sequelize.Op.like]: `%${pagination.name}%` };
       }
+
+      where.status = true;
 
       const { count, rows } = await db.Products.findAndCountAll({
         where,
@@ -366,6 +370,8 @@ module.exports = {
       if (pagination.name) {
         where.name = { [db.Sequelize.Op.like]: `%${pagination.name}%` };
       }
+
+      where.status = true;
 
     try {
 
