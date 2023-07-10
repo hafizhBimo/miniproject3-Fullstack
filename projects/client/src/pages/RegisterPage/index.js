@@ -1,10 +1,13 @@
 "use client";
 
 import { Button, Checkbox, Label, TextInput } from "flowbite-react";
+import { useState } from "react";
 import { ErrorMessage, Form, Formik } from "formik";
 import * as Yup from "yup";
 import "./style.css";
 import { useNavigate } from "react-router-dom";
+import { Alert } from "flowbite-react";
+import { HiInformationCircle } from 'react-icons/hi';
 import axios from "axios";
 
 const createSchema = Yup.object().shape({
@@ -17,20 +20,41 @@ const createSchema = Yup.object().shape({
 });
 
 const RegisterPage = () => {
+
+  const [isError, setError] = useState("");
+
   const navigate = useNavigate();
   const handleSubmit = (value, action) => {
-    try {
-      axios.post(`http://localhost:8000/api/auth/register`, value);
-    } catch (error) {
-      return;
-    }
-    navigate("/Login");
+
+      axios.post(`http://localhost:8000/api/auth/register`, value)
+      .then((response) => {
+      navigate("/Login");
+      })
+      .catch (e =>{
+        console.log(e);
+        setError(e.response.data.message)   
+      });
+    
   };
   const navigateToLogin = () => {
     navigate("/Login");
   };
   return (
     <>
+    {isError? (<Alert
+        color="failure"
+        icon={HiInformationCircle}
+        onDismiss={()=>setError("")}
+      >
+        <span>
+          <p>
+            <span className="font-medium">
+              {isError}
+            </span>
+          </p>
+        </span>
+      </Alert>) : isError
+      }
       <div className="items-center justify-center  flex">
         <div style={{ paddingBottom: "700px", paddingRight: "20px" }}>
           <button className="  hover:scale-150 hover:rounded hover:bg-sky-400  my-4">
@@ -88,7 +112,7 @@ const RegisterPage = () => {
                   className="input-wrapper"
                   id="email"
                   name="email"
-                  placeholder="name@flowbite.com"
+                  placeholder="email@provider.com"
                   required
                   type="email"
                   onChange={props.handleChange}
