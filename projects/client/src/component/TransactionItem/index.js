@@ -8,7 +8,7 @@ const TransactionItem = ({ transactionList }) => {
         <div
           onClick={console.log(data.Order_items)}
           key={data.id}
-          className="container mx-auto my-4 px-20"
+          className="mx-auto my-1 px-40"
         >
           <div
             className="flex bg-white border border-gray-300 rounded-xl overflow-hidden items-center justify-start"
