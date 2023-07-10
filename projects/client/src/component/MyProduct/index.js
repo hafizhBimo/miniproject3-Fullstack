@@ -110,7 +110,21 @@ const MyProduct = () => {
   // active deactive
   const handleToggleActive = async (productId) => {
     try {
-      const updatedUserData = userData.map((Product) => {
+      // Make an API call to update the product's status
+      await axios.patch(
+        `http://localhost:8000/api/product/active/${productId}`,
+        {
+          status: userData.find((Product) => Product.id === productId).status
+            ? false
+            : true,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const newUpdatedUserData = userData.map((Product) => {
         if (Product.id === productId) {
           return {
             ...Product,
@@ -119,24 +133,12 @@ const MyProduct = () => {
         }
         return Product;
       });
-  
-      setUserData(updatedUserData);
-  
-      // Make an API call to update the product's status
-      await axios.patch(
-        `http://localhost:8000/api/product/active/${productId}`,
-        { status: updatedUserData.find((Product) => Product.id === productId).status ? false : true },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+
+      setUserData(newUpdatedUserData);
     } catch (error) {
       console.error("Error toggling product status:", error);
     }
   };
-  
 
   return (
     <>
@@ -204,9 +206,7 @@ const MyProduct = () => {
                 {rupiah(Product.price)}
               </span>
             </div>
-            
           </Card>
-          
         ))}
       </div>
       <div className="flex items-center justify-center text-center">
