@@ -6,9 +6,11 @@ import * as Yup from "yup";
 // import "./style.css";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
-import React from "react";
+import React, {useState} from "react";
 import { useDispatch } from "react-redux";
 import { setToken } from "../../features/authSlice";
+import { Alert } from "flowbite-react";
+import { HiInformationCircle } from 'react-icons/hi';
 import "boxicons";
 
 const createSchema = Yup.object().shape({
@@ -19,19 +21,23 @@ const createSchema = Yup.object().shape({
 const LoginPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const [isError, setError] = useState("");
+
   const handleSubmit = (value, action) => {
-    console.log("tes");
-    try {
+
       axios
         .post(`http://localhost:8000/api/auth/login`, value)
         .then((response) => {
           localStorage.setItem("token", response.data.accessToken);
           dispatch(setToken(response.data.accessToken));
+          navigate("/");
+        })
+        .catch (e =>{
+          console.log(e);
+          setError(e.response.data.message)   
         });
-    } catch (error) {
-      return;
-    }
-    navigate("/");
+    
   };
 
   const navigateToHome = () => {
@@ -39,6 +45,20 @@ const LoginPage = () => {
   };
   return (
     <>
+    {isError? (<Alert
+        color="failure"
+        icon={HiInformationCircle}
+        onDismiss={()=>setError("")}
+      >
+        <span>
+          <p>
+            <span className="font-medium">
+              {isError}
+            </span>
+          </p>
+        </span>
+      </Alert>) : isError
+      }
       <div className="items-center justify-center  my-32 border flex">
         <div style={{paddingBottom: "350px", paddingRight: "10px"}}>
 
@@ -99,7 +119,7 @@ const LoginPage = () => {
               </div>
               <Button type="submit">Submit</Button>
               <span>
-                Do you have an account?{" "}
+                Don't have an account yet?{" "}
                 <Link
                   className="underline underline-offset-1 transform hover:scale-110 text-blue-500 hover:text-purple-500"
                   to="/register"
