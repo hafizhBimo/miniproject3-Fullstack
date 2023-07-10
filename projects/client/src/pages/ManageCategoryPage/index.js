@@ -3,10 +3,14 @@ import axios from "axios";
 import AddCategoryButton from "../../component/AddCategoryButton";
 import ModifyCategory from "../../component/ModifyCategory";
 import "./style.css";
+import { Alert } from "flowbite-react";
+
+import { HiInformationCircle } from "react-icons/hi";
 
 import withAuth from "../../component/withAuth";
 
 const ManageCategoryPage = () => {
+  const [alertMessage, setAlertMessage] = useState("");
   const [categoryData, setCategoryData] = useState([]);
   useEffect(() => {
     axios.get(`http://localhost:8000/api/categories`).then((response) => {
@@ -25,8 +29,40 @@ const ManageCategoryPage = () => {
         }}
       >
         <div style={{ width: "100%" }}>
+          {alertMessage ? (
+            alertMessage == "category already exist" ? (
+              <Alert
+                color="failure"
+                icon={HiInformationCircle}
+                onDismiss={() => setAlertMessage("")}
+              >
+                <span>
+                  <p>
+                    <span className="font-medium">{alertMessage}</span>
+                  </p>
+                </span>
+              </Alert>
+            ) : (
+              <Alert
+                color="success"
+                icon={HiInformationCircle}
+                onDismiss={() => setAlertMessage("")}
+              >
+                <span>
+                  <p>
+                    <span className="font-medium">{alertMessage}</span>
+                  </p>
+                </span>
+              </Alert>
+            )
+          ) : (
+            alertMessage
+          )}
           <AddCategoryButton />
-          <ModifyCategory categoryData={categoryData} />
+          <ModifyCategory
+            categoryData={categoryData}
+            setAlertMessage={setAlertMessage}
+          />
         </div>
       </div>
     </div>
