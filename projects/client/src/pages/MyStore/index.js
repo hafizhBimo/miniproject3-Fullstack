@@ -4,6 +4,7 @@ import {
   HiShoppingCart,
   HiCurrencyDollar,
   HiShoppingBag,
+  HiTrendingUp,
 } from "react-icons/hi";
 import CartList from "../../component/CartList";
 import TransactionMenu from "../../component/TransactionMenu";
@@ -11,6 +12,7 @@ import { useState } from "react";
 import MyProduct from "../../component/MyProduct";
 import GrossIncome from "../../component/GrossIncome";
 import withAuth from "../../component/withAuth";
+import MyTopSelling from "../../component/MyTopSelling";
 
 const MyStore = () => {
   const [menu, setMenu] = useState(<MyProduct />);
@@ -27,6 +29,13 @@ const MyStore = () => {
                 onClick={() => setMenu(<MyProduct />)}
               >
                 <p>My Product</p>
+              </Sidebar.Item>
+              <Sidebar.Item
+                href="#"
+                icon={HiTrendingUp}
+                onClick={() => setMenu(<MyTopSelling />)}
+              >
+                <p>My Top Selling Products</p>
               </Sidebar.Item>
               <Sidebar.Item
                 href="#"
