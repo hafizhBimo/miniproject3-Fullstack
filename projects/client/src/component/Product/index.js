@@ -177,7 +177,6 @@ const Product = () => {
                 <p>{Product.name}</p>
               </h5>
 
-              <h6>{Product.User.storeName}</h6>
               <div
                 onMouseEnter={() => {
                   setCurrentHover(Product.id);

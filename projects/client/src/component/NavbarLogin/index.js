@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import { setToken } from "../../features/authSlice";
 import { HiCurrencyDollar, HiLogout, HiHome } from "react-icons/hi";
+import MugenShop2 from "../../asset/MugenShop2.png";
 
 const NavbarLogin = () => {
   const dispatch = useDispatch();
@@ -11,12 +12,9 @@ const NavbarLogin = () => {
       <Navbar.Brand href="/">
         <img
           alt="Flowbite React Logo"
-          className="mr-3 h-6 sm:h-9"
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxdkHKLUaOFD-PuO8f9lOb-nRTaphpfXxQqyCaWPRsFN8HXZK7Ja0g6shAJkh6sYITTuM&usqp=CAU"
+          style={{width:"200px"}}
+          src={MugenShop2}
         />
-        <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-          eat-sleep-game-repeat
-        </span>
       </Navbar.Brand>
       <div className="flex md:order-2">
         <Dropdown
