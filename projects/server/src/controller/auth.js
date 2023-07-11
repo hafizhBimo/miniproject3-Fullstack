@@ -93,4 +93,28 @@ module.exports = {
       });
     }
   },
+  async keepLogin(req, res) {
+    const userId = req.user.id;
+    try {
+      const user = await User.findOne({
+        where: {
+          id: userId,
+        },
+      });
+      if (!user) {
+        return res.status(400).send({
+          message: "user not found",
+        });
+      }
+      res.send({
+        message: "keepLogin successful",
+        data: user,
+      });
+    } catch (error) {
+      res.status(500).send({
+        message: "fatal error on server",
+        error: error.message,
+      });
+    }
+  },
 };

@@ -4,7 +4,7 @@ import { BsTwitch, BsGithub, BsInstagram, BsTwitter } from "react-icons/bs";
 
 export default function FooterComponent() {
   return (
-    <Footer container className="border rounded border-sky-500 ">
+    <Footer container className="border rounded border-sky-500 bg-[#73beb0]">
       <div className="w-full">
         <div className="grid w-full justify-between sm:flex sm:justify-between md:flex md:grid-cols-1">
           <div>
@@ -14,24 +14,24 @@ export default function FooterComponent() {
             <div>
               <Footer.Title title="about" />
               <Footer.LinkGroup col>
-                <Footer.Link href="/">Flowbite</Footer.Link>
-                <Footer.Link href="/">Tailwind CSS</Footer.Link>
+                <Footer.Link className="text-green-950" href="/">Flowbite</Footer.Link>
+                <Footer.Link className="text-green-950" href="/">Tailwind CSS</Footer.Link>
               </Footer.LinkGroup>
             </div>
             <div>
               <Footer.Title title="Follow us" />
               <Footer.LinkGroup col>
-                <Footer.Link href="https://github.com/hafizhBimo/miniproject3-Fullstack">
+                <Footer.Link className="text-green-950" href="https://github.com/hafizhBimo/miniproject3-Fullstack">
                   Github
                 </Footer.Link>
-                <Footer.Link href="https://discord.com/">Discord</Footer.Link>
+                <Footer.Link className="text-green-950" href="https://discord.com/">Discord</Footer.Link>
               </Footer.LinkGroup>
             </div>
             <div>
               <Footer.Title title="Legal" />
               <Footer.LinkGroup col>
-                <Footer.Link href="/">Privacy Policy</Footer.Link>
-                <Footer.Link href="/">Terms & Conditions</Footer.Link>
+                <Footer.Link className="text-green-950" href="/">Privacy Policy</Footer.Link>
+                <Footer.Link className="text-green-950" href="/">Terms & Conditions</Footer.Link>
               </Footer.LinkGroup>
             </div>
           </div>
