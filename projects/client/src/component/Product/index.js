@@ -161,6 +161,7 @@ const Product = () => {
           <Link key={Product.id} to={`/Product/${Product.id}`}>
             <Card
               className=" w-100 my-15 transform hover:scale-110 transition duration-500"
+              style={{height:"100%", maxHeight:"520px"}}
               key={Product.id}
               imgAlt="test"
               imgSrc={`http://localhost:8000${Product.imageUrl}`}
