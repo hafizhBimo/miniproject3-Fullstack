@@ -79,7 +79,7 @@ module.exports = {
 
       const payload = { id: user.id };
       const token = jwt.sign(payload, secretKey, {
-        expiresIn: "1h",
+        expiresIn: "3h",
       });
       res.send({
         message: "login success",
