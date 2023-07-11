@@ -96,6 +96,7 @@ const RegisterPage = () => {
                   onChange={props.handleChange}
                   value={props.values.username}
                 />
+                <ErrorMessage name="username" />
               </div>
               <div>
                 <div className="mb-2 block">
@@ -116,6 +117,7 @@ const RegisterPage = () => {
                   onChange={props.handleChange}
                   value={props.values.email}
                 />
+                <ErrorMessage name="email" />
               </div>
               <div>
                 <div className="mb-2 block">
@@ -135,6 +137,7 @@ const RegisterPage = () => {
                   onChange={props.handleChange}
                   value={props.values.phoneNumber}
                 />
+                <ErrorMessage name="phoneNumber" />
               </div>
               <div>
                 <div className="mb-2 block">
@@ -174,7 +177,7 @@ const RegisterPage = () => {
                   onChange={props.handleChange}
                   value={props.values.password}
                 />
-                <ErrorMessage name="confirmPassword" component="div" />
+                <ErrorMessage name="password" component="div" />
               </div>
               <div>
                 <div className="mb-2 block">

@@ -38,13 +38,7 @@ const NavbarLogin = () => {
         <Dropdown
           arrowIcon={false}
           inline={true}
-          label={
-            <Avatar
-              alt="User settings"
-              img="/Avatar-PNG-Photos.png"
-              rounded={true}
-            />
-          }
+          label={<Avatar rounded></Avatar>}
         >
           <Dropdown.Header>
             <span className="block text-sm">{username}</span>

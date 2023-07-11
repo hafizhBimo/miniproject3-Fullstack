@@ -71,7 +71,7 @@ const TopProduct = () => {
               <div key={Product.id}>
                 <Link to={`/Product/${Product.id}`}>
                   <Card
-                    style={{ width: "250px" }}
+                    style={{ width: "250px", height:"100%", maxHeight:"520px" }}
                     key={Product.id}
                     imgAlt="test"
                     className=""
