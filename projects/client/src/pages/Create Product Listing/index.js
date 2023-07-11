@@ -54,7 +54,6 @@ const CreateProductListing = () => {
       })
 
       .then((response) => {
-        console.log(response);
         setValue(response.data);
         setAlertMessage(response.data.message);
       })

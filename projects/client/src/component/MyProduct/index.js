@@ -73,7 +73,6 @@ const MyProduct = () => {
       .then((response) => {
         setCurrentPage(page);
         setUserData(response.data.data);
-        console.log(response.data.data);
         setTotalPages(Math.ceil(response.data.pagination.totalData / 9));
       })
       .catch((err) => console.log(err));
@@ -85,14 +84,11 @@ const MyProduct = () => {
   };
 
   const handleCategoryChange = (event) => {
-    // console.log(event.target.value);
     setCategory(event.target.value);
     search(term, event.target.value, orderValue, sortValue);
   };
 
   const search = (term, category, orderValue, sortValue) => {
-    console.log("Term: " + term);
-
     axios
       .get(
         `http://localhost:8000/api/product?search=${term}&order=${orderValue}&categoryId=${category}&sort=${sortValue}`

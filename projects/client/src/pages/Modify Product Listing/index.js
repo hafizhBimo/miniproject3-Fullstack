@@ -8,7 +8,7 @@ import {
   FileInput,
   Button,
   Dropdown,
-  Alert
+  Alert,
 } from "flowbite-react";
 import { Link, useNavigate } from "react-router-dom";
 import withAuth from "../../component/withAuth";
@@ -38,7 +38,6 @@ const ModifyProductListing = () => {
     axios(`http://localhost:8000/api/product/${currurl}`)
       .then((response2) => {
         setProductData(response2.data.data);
-        console.log(response2.data.data, "ini prodak");
       })
       .catch((err) => console.log(err));
   }, []);
@@ -64,7 +63,6 @@ const ModifyProductListing = () => {
       })
 
       .then((response) => {
-        console.log(response, "ini response");
         setValue(response.data);
         setAlertMessage(response.data.message);
         setTimeout(() => {

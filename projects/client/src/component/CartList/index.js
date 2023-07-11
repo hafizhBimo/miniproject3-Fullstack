@@ -19,7 +19,6 @@ const CartList = ({ setCartData }) => {
       .then((response) => {
         setCartList(response.data.data);
         setCartData(response.data.data.length);
-        console.log(response.data.data, "ini data");
       });
   }, []);
   return (

@@ -36,7 +36,7 @@ const Product = () => {
 
         setUserData(response1.data.data);
         setTotalPages(Math.ceil(response1.data.pagination.totalData / 9));
-        console.log(response1.data, "ini data");
+
         const response2 = await axios.get(
           "http://localhost:8000/api/categories"
         );
@@ -70,7 +70,7 @@ const Product = () => {
       .then((response) => {
         setCurrentPage(page);
         setUserData(response.data.data);
-        console.log(response.data.data);
+
         setTotalPages(Math.ceil(response.data.pagination.totalData / 9));
       })
       .catch((err) => console.log(err));
@@ -82,7 +82,6 @@ const Product = () => {
   };
 
   const handleCategoryChange = (event) => {
-    // console.log(event.target.value);
     setCategory(event.target.value);
     search(term, event.target.value, orderValue, sortValue);
   };
@@ -96,7 +95,6 @@ const Product = () => {
       )
       .then((response) => {
         setUserData(response.data.data);
-        console.log(response.data, "ini product");
       })
       .catch((err) => console.log(err));
   };
