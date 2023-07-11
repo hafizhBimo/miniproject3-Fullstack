@@ -7,7 +7,7 @@ import * as Yup from "yup";
 import "./style.css";
 import { useNavigate } from "react-router-dom";
 import { Alert } from "flowbite-react";
-import { HiInformationCircle } from 'react-icons/hi';
+import { HiInformationCircle } from "react-icons/hi";
 import axios from "axios";
 
 const createSchema = Yup.object().shape({
@@ -20,41 +20,39 @@ const createSchema = Yup.object().shape({
 });
 
 const RegisterPage = () => {
-
   const [isError, setError] = useState("");
 
   const navigate = useNavigate();
   const handleSubmit = (value, action) => {
-
-      axios.post(`http://localhost:8000/api/auth/register`, value)
+    axios
+      .post(`http://localhost:8000/api/auth/register`, value)
       .then((response) => {
-      navigate("/Login");
+        navigate("/Login");
       })
-      .catch (e =>{
-        console.log(e);
-        setError(e.response.data.message)   
+      .catch((e) => {
+        setError(e.response.data.message);
       });
-    
   };
   const navigateToLogin = () => {
     navigate("/Login");
   };
   return (
     <>
-    {isError? (<Alert
-        color="failure"
-        icon={HiInformationCircle}
-        onDismiss={()=>setError("")}
-      >
-        <span>
-          <p>
-            <span className="font-medium">
-              {isError}
-            </span>
-          </p>
-        </span>
-      </Alert>) : isError
-      }
+      {isError ? (
+        <Alert
+          color="failure"
+          icon={HiInformationCircle}
+          onDismiss={() => setError("")}
+        >
+          <span>
+            <p>
+              <span className="font-medium">{isError}</span>
+            </p>
+          </span>
+        </Alert>
+      ) : (
+        isError
+      )}
       <div className="items-center justify-center  flex">
         <div style={{ paddingBottom: "700px", paddingRight: "20px" }}>
           <button className="  hover:scale-150 hover:rounded hover:bg-sky-400  my-4">
@@ -98,6 +96,7 @@ const RegisterPage = () => {
                   onChange={props.handleChange}
                   value={props.values.username}
                 />
+                <ErrorMessage name="username" />
               </div>
               <div>
                 <div className="mb-2 block">
@@ -118,6 +117,7 @@ const RegisterPage = () => {
                   onChange={props.handleChange}
                   value={props.values.email}
                 />
+                <ErrorMessage name="email" />
               </div>
               <div>
                 <div className="mb-2 block">
@@ -137,6 +137,7 @@ const RegisterPage = () => {
                   onChange={props.handleChange}
                   value={props.values.phoneNumber}
                 />
+                <ErrorMessage name="phoneNumber" />
               </div>
               <div>
                 <div className="mb-2 block">
@@ -176,7 +177,7 @@ const RegisterPage = () => {
                   onChange={props.handleChange}
                   value={props.values.password}
                 />
-                <ErrorMessage name="confirmPassword" component="div" />
+                <ErrorMessage name="password" component="div" />
               </div>
               <div>
                 <div className="mb-2 block">

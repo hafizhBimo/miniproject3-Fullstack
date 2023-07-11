@@ -30,7 +30,6 @@ const ModifyCategory = ({ categoryData, setAlertMessage }) => {
           { headers: { Authorization: `Bearer ${token}` } }
         )
         .then((response) => {
-          console.log(response.data.message);
           setAlertMessage(response.data.message);
           setTimeout(() => {
             window.location.reload();

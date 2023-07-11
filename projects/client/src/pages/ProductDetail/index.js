@@ -13,7 +13,6 @@ const ProductDetail = () => {
     axios
       .get(`http://localhost:8000/api/product`)
       .then((response) => {
-        console.log("WING", response);
         setUserData([response.data.data]);
       })
       .catch((err) => console.log(err));
