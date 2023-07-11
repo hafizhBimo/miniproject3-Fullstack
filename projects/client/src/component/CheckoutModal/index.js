@@ -56,7 +56,9 @@ const CheckoutModal = ({ showModal, onClose, setShowModal }) => {
         })
         .then((response) => {
           navigate("/MyTransaction");
+          setShowModal(false);
           alert(response.data.message);
+          window.location.reload();
         });
     } catch (error) {
       return;

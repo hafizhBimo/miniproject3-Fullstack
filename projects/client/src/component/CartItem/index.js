@@ -9,6 +9,7 @@ const CartItem = ({
   productStore,
   product_id,
   cartId,
+  setAlertMessage,
 }) => {
   const token = useSelector((state) => state.auth.token);
   const handleClick = (id) => {
@@ -18,7 +19,7 @@ const CartItem = ({
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((response) => {
-          alert(response.data.message);
+          setAlertMessage(response.data.message);
           window.location.reload();
         });
     } catch (error) {
